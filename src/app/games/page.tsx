@@ -3,6 +3,8 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { listRawgGenres, listRawgPlatforms, searchRawgGames } from "@/lib/rawg";
 import { addGameToLibrary } from "@/lib/actions/library";
+import { getLocale } from "@/i18n/getLocale";
+import { getDictionary } from "@/i18n/dictionaries";
 
 export default async function GamesCatalogPage({
   searchParams,
@@ -10,7 +12,8 @@ export default async function GamesCatalogPage({
   searchParams: Promise<{ q?: string; genre?: string; platform?: string }>;
 }) {
   const params = await searchParams;
-  const session = await auth();
+  const [session, locale] = await Promise.all([auth(), getLocale()]);
+  const t = getDictionary(locale).games;
 
   let genres: Awaited<ReturnType<typeof listRawgGenres>> = [];
   let platforms: Awaited<ReturnType<typeof listRawgPlatforms>> = [];
@@ -25,7 +28,7 @@ export default async function GamesCatalogPage({
     ]);
   } catch (error) {
     console.error(error);
-    catalogError = "Каталог недоступен: не настроен RAWG_API_KEY (см. .env.example).";
+    catalogError = t.unavailable;
   }
 
   const inLibraryIds = session?.user
@@ -40,7 +43,7 @@ export default async function GamesCatalogPage({
   if (catalogError) {
     return (
       <div className="flex flex-col gap-4">
-        <h1 className="text-2xl font-semibold">Каталог игр</h1>
+        <h1 className="text-2xl font-semibold">{t.title}</h1>
         <p className="text-red-500">{catalogError}</p>
       </div>
     );
@@ -48,13 +51,13 @@ export default async function GamesCatalogPage({
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-semibold">Каталог игр</h1>
+      <h1 className="text-2xl font-semibold">{t.title}</h1>
 
       <form className="flex flex-wrap gap-3" method="get">
         <input
           name="q"
           defaultValue={params.q}
-          placeholder="Поиск по названию..."
+          placeholder={t.searchPlaceholder}
           className="min-w-48 flex-1 rounded-md border border-black/20 bg-transparent px-3 py-2 dark:border-white/20"
         />
         <select
@@ -62,7 +65,7 @@ export default async function GamesCatalogPage({
           defaultValue={params.genre ?? ""}
           className="rounded-md border border-black/20 bg-transparent px-3 py-2 dark:border-white/20"
         >
-          <option value="">Все жанры</option>
+          <option value="">{t.allGenres}</option>
           {genres.map((g) => (
             <option key={g.id} value={g.slug}>
               {g.name}
@@ -74,7 +77,7 @@ export default async function GamesCatalogPage({
           defaultValue={params.platform ?? ""}
           className="rounded-md border border-black/20 bg-transparent px-3 py-2 dark:border-white/20"
         >
-          <option value="">Все платформы</option>
+          <option value="">{t.allPlatforms}</option>
           {platforms.map((p) => (
             <option key={p.id} value={p.id}>
               {p.name}
@@ -85,7 +88,7 @@ export default async function GamesCatalogPage({
           type="submit"
           className="rounded-md bg-foreground px-4 py-2 text-background hover:opacity-90"
         >
-          Применить
+          {t.apply}
         </button>
       </form>
 
@@ -109,35 +112,31 @@ export default async function GamesCatalogPage({
               )}
               <p className="font-medium">{game.name}</p>
               <p className="text-xs text-black/60 dark:text-white/60">
-                {game.released ?? "дата неизвестна"} ·{" "}
-                {game.genres?.map((g) => g.name).join(", ") || "жанр неизвестен"}
+                {game.released ?? t.unknownDate} ·{" "}
+                {game.genres?.map((g) => g.name).join(", ") || t.unknownGenre}
               </p>
 
               {session?.user ? (
                 owned ? (
-                  <span className="mt-auto text-sm text-green-600">В библиотеке</span>
+                  <span className="mt-auto text-sm text-green-600">{t.inLibrary}</span>
                 ) : (
                   <form action={addGameToLibrary.bind(null, externalId)} className="mt-auto">
                     <button
                       type="submit"
                       className="w-full rounded-md bg-foreground px-3 py-1.5 text-sm text-background hover:opacity-90"
                     >
-                      Добавить в библиотеку
+                      {t.addToLibrary}
                     </button>
                   </form>
                 )
               ) : (
-                <p className="mt-auto text-xs text-black/50 dark:text-white/50">
-                  Войдите, чтобы добавить в библиотеку
-                </p>
+                <p className="mt-auto text-xs text-black/50 dark:text-white/50">{t.loginToAdd}</p>
               )}
             </li>
           );
         })}
 
-        {results.length === 0 && (
-          <p className="text-black/60 dark:text-white/60">Ничего не найдено.</p>
-        )}
+        {results.length === 0 && <p className="text-black/60 dark:text-white/60">{t.noResults}</p>}
       </ul>
     </div>
   );

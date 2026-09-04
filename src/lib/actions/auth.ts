@@ -5,28 +5,32 @@ import { z } from "zod";
 import { AuthError } from "next-auth";
 import { prisma } from "@/lib/prisma";
 import { signIn } from "@/auth";
-
-const registerSchema = z.object({
-  email: z.string().trim().toLowerCase().email("Некорректный email"),
-  username: z
-    .string()
-    .trim()
-    .min(3, "Ник — минимум 3 символа")
-    .max(24, "Ник — максимум 24 символа")
-    .regex(/^[a-zA-Z0-9_]+$/, "Только латиница, цифры и подчёркивание"),
-  password: z.string().min(8, "Пароль — минимум 8 символов"),
-});
+import { getLocale } from "@/i18n/getLocale";
+import { getDictionary } from "@/i18n/dictionaries";
 
 export type FormState = { error?: string };
 
 export async function registerUser(_prevState: FormState, formData: FormData): Promise<FormState> {
+  const t = getDictionary(await getLocale()).auth.errors;
+
+  const registerSchema = z.object({
+    email: z.string().trim().toLowerCase().email(t.invalidEmail),
+    username: z
+      .string()
+      .trim()
+      .min(3, t.usernameTooShort)
+      .max(24, t.usernameTooLong)
+      .regex(/^[a-zA-Z0-9_]+$/, t.usernameInvalidChars),
+    password: z.string().min(8, t.passwordTooShort),
+  });
+
   const parsed = registerSchema.safeParse({
     email: formData.get("email"),
     username: formData.get("username"),
     password: formData.get("password"),
   });
   if (!parsed.success) {
-    return { error: parsed.error.issues[0]?.message ?? "Некорректные данные" };
+    return { error: parsed.error.issues[0]?.message ?? t.invalidData };
   }
   const { email, username, password } = parsed.data;
 
@@ -34,7 +38,7 @@ export async function registerUser(_prevState: FormState, formData: FormData): P
     where: { OR: [{ email }, { username }] },
   });
   if (existing) {
-    return { error: "Пользователь с таким email или ником уже существует" };
+    return { error: t.accountExists };
   }
 
   const passwordHash = await bcrypt.hash(password, 12);
@@ -44,7 +48,7 @@ export async function registerUser(_prevState: FormState, formData: FormData): P
     await signIn("credentials", { email, password, redirectTo: "/library" });
   } catch (error) {
     if (error instanceof AuthError) {
-      return { error: "Аккаунт создан, но вход не удался — попробуйте войти вручную" };
+      return { error: t.registeredButLoginFailed };
     }
     throw error;
   }
@@ -52,6 +56,8 @@ export async function registerUser(_prevState: FormState, formData: FormData): P
 }
 
 export async function loginUser(_prevState: FormState, formData: FormData): Promise<FormState> {
+  const t = getDictionary(await getLocale()).auth.errors;
+
   try {
     await signIn("credentials", {
       email: formData.get("email"),
@@ -60,7 +66,7 @@ export async function loginUser(_prevState: FormState, formData: FormData): Prom
     });
   } catch (error) {
     if (error instanceof AuthError) {
-      return { error: "Неверный email или пароль" };
+      return { error: t.invalidCredentials };
     }
     throw error;
   }

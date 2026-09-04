@@ -3,11 +3,15 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { getUserStats } from "@/lib/stats";
 import { StatsSummary } from "@/components/StatsSummary";
+import { getLocale } from "@/i18n/getLocale";
+import { getDictionary } from "@/i18n/dictionaries";
 
 export default async function ProfilePage() {
   const session = await auth();
   if (!session?.user) redirect("/login");
   const userId = session.user.id;
+
+  const t = getDictionary(await getLocale());
 
   const [user, stats] = await Promise.all([
     prisma.user.findUniqueOrThrow({ where: { id: userId } }),
@@ -29,8 +33,8 @@ export default async function ProfilePage() {
       {user.bio && <p className="text-black/80 dark:text-white/80">{user.bio}</p>}
 
       <section>
-        <h2 className="mb-2 text-lg font-medium">Статистика</h2>
-        <StatsSummary stats={stats} />
+        <h2 className="mb-2 text-lg font-medium">{t.profile.statsHeading}</h2>
+        <StatsSummary stats={stats} t={t} />
       </section>
     </div>
   );

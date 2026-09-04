@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { searchRawgGames } from "@/lib/rawg";
+import { getLocale } from "@/i18n/getLocale";
+import { getDictionary } from "@/i18n/dictionaries";
 
 export async function GET(request: NextRequest) {
-  const session = await auth();
+  const [session, locale] = await Promise.all([auth(), getLocale()]);
+  const t = getDictionary(locale);
+
   if (!session?.user) {
-    return NextResponse.json({ error: "Не авторизован" }, { status: 401 });
+    return NextResponse.json({ error: t.auth.errors.notAuthorized }, { status: 401 });
   }
 
   const query = request.nextUrl.searchParams.get("q")?.trim();
@@ -26,6 +30,6 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: "Не удалось выполнить поиск" }, { status: 502 });
+    return NextResponse.json({ error: t.search.searchFailed }, { status: 502 });
   }
 }

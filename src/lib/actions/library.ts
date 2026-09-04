@@ -5,10 +5,15 @@ import type { GameStatus } from "@prisma/client";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { getRawgGame } from "@/lib/rawg";
+import { getLocale } from "@/i18n/getLocale";
+import { getDictionary } from "@/i18n/dictionaries";
 
 async function requireUserId(): Promise<string> {
   const session = await auth();
-  if (!session?.user?.id) throw new Error("Не авторизован");
+  if (!session?.user?.id) {
+    const t = getDictionary(await getLocale()).auth.errors;
+    throw new Error(t.notAuthorized);
+  }
   return session.user.id;
 }
 
@@ -63,7 +68,10 @@ export async function updateLibraryEntry(entryId: string, data: LibraryUpdate) {
 export async function changeLibraryStatus(entryId: string, status: GameStatus) {
   const userId = await requireUserId();
   const entry = await prisma.userGame.findUnique({ where: { id: entryId, userId } });
-  if (!entry) throw new Error("Запись не найдена");
+  if (!entry) {
+    const t = getDictionary(await getLocale()).auth.errors;
+    throw new Error(t.entryNotFound);
+  }
 
   const now = new Date();
   await prisma.userGame.update({

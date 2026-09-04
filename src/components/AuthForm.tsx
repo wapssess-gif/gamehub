@@ -14,10 +14,12 @@ export function AuthForm({
   action,
   fields,
   submitLabel,
+  pendingLabel,
 }: {
   action: (state: FormState, formData: FormData) => Promise<FormState>;
   fields: Field[];
   submitLabel: string;
+  pendingLabel: string;
 }) {
   const [state, formAction, pending] = useActionState(action, {});
 
@@ -43,7 +45,7 @@ export function AuthForm({
         disabled={pending}
         className="rounded-md bg-foreground px-4 py-2 text-background hover:opacity-90 disabled:opacity-50"
       >
-        {pending ? "Подождите..." : submitLabel}
+        {pending ? pendingLabel : submitLabel}
       </button>
     </form>
   );

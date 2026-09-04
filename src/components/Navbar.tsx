@@ -1,8 +1,12 @@
 import Link from "next/link";
 import { auth, signOut } from "@/auth";
+import { getLocale } from "@/i18n/getLocale";
+import { getDictionary } from "@/i18n/dictionaries";
+import { LocaleSwitcher } from "@/components/LocaleSwitcher";
 
 export async function Navbar() {
-  const session = await auth();
+  const [session, locale] = await Promise.all([auth(), getLocale()]);
+  const t = getDictionary(locale).nav;
 
   return (
     <header className="border-b border-black/10 dark:border-white/10">
@@ -13,16 +17,16 @@ export async function Navbar() {
 
         <div className="flex items-center gap-4 text-sm">
           <Link href="/games" className="hover:underline">
-            Каталог
+            {t.catalog}
           </Link>
 
           {session?.user ? (
             <>
               <Link href="/library" className="hover:underline">
-                Библиотека
+                {t.library}
               </Link>
               <Link href="/profile" className="hover:underline">
-                Профиль
+                {t.profile}
               </Link>
               <form
                 action={async () => {
@@ -31,23 +35,25 @@ export async function Navbar() {
                 }}
               >
                 <button type="submit" className="hover:underline">
-                  Выйти
+                  {t.logout}
                 </button>
               </form>
             </>
           ) : (
             <>
               <Link href="/login" className="hover:underline">
-                Войти
+                {t.login}
               </Link>
               <Link
                 href="/register"
                 className="rounded-md bg-foreground px-3 py-1.5 text-background hover:opacity-90"
               >
-                Регистрация
+                {t.register}
               </Link>
             </>
           )}
+
+          <LocaleSwitcher locale={locale} />
         </div>
       </nav>
     </header>

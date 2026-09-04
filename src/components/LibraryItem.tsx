@@ -4,7 +4,8 @@ import { useState, useTransition } from "react";
 import Image from "next/image";
 import type { GameStatus } from "@prisma/client";
 import { changeLibraryStatus, removeLibraryEntry, updateLibraryEntry } from "@/lib/actions/library";
-import { STATUS_LABELS, STATUS_ORDER } from "@/lib/labels";
+import { STATUS_ORDER } from "@/lib/labels";
+import type { Dictionary } from "@/i18n/dictionaries";
 
 export type LibraryEntryView = {
   id: string;
@@ -19,7 +20,13 @@ export type LibraryEntryView = {
   };
 };
 
-export function LibraryItem({ entry }: { entry: LibraryEntryView }) {
+export function LibraryItem({
+  entry,
+  t,
+}: {
+  entry: LibraryEntryView;
+  t: Dictionary["library"] & { status: Dictionary["status"] };
+}) {
   const [progress, setProgress] = useState(entry.progressPercent ?? "");
   const [hours, setHours] = useState(entry.hoursPlayed ?? "");
   const [rating, setRating] = useState(entry.rating ?? "");
@@ -44,7 +51,7 @@ export function LibraryItem({ entry }: { entry: LibraryEntryView }) {
   }
 
   function handleRemove() {
-    if (!confirm(`Удалить «${entry.game.title}» из библиотеки?`)) return;
+    if (!confirm(t.removeConfirm.replace("{title}", entry.game.title))) return;
     startTransition(async () => {
       await removeLibraryEntry(entry.id);
     });
@@ -65,7 +72,7 @@ export function LibraryItem({ entry }: { entry: LibraryEntryView }) {
         <div>
           <p className="font-medium">{entry.game.title}</p>
           <p className="text-xs text-black/60 dark:text-white/60">
-            {entry.game.genres.join(", ") || "жанр неизвестен"}
+            {entry.game.genres.join(", ") || t.unknownGenre}
           </p>
         </div>
       </div>
@@ -78,7 +85,7 @@ export function LibraryItem({ entry }: { entry: LibraryEntryView }) {
         >
           {STATUS_ORDER.map((status) => (
             <option key={status} value={status}>
-              {STATUS_LABELS[status]}
+              {t.status[status]}
             </option>
           ))}
         </select>
@@ -89,7 +96,7 @@ export function LibraryItem({ entry }: { entry: LibraryEntryView }) {
           max={100}
           value={progress}
           onChange={(e) => setProgress(e.target.value === "" ? "" : Number(e.target.value))}
-          placeholder="% прогресса"
+          placeholder={t.percentPlaceholder}
           className="w-24 rounded-md border border-black/20 bg-transparent px-2 py-1 dark:border-white/20"
         />
 
@@ -99,7 +106,7 @@ export function LibraryItem({ entry }: { entry: LibraryEntryView }) {
           step={0.5}
           value={hours}
           onChange={(e) => setHours(e.target.value === "" ? "" : Number(e.target.value))}
-          placeholder="часов"
+          placeholder={t.hoursPlaceholder}
           className="w-20 rounded-md border border-black/20 bg-transparent px-2 py-1 dark:border-white/20"
         />
 
@@ -109,7 +116,7 @@ export function LibraryItem({ entry }: { entry: LibraryEntryView }) {
           max={10}
           value={rating}
           onChange={(e) => setRating(e.target.value === "" ? "" : Number(e.target.value))}
-          placeholder="оценка"
+          placeholder={t.ratingPlaceholder}
           className="w-20 rounded-md border border-black/20 bg-transparent px-2 py-1 dark:border-white/20"
         />
 
@@ -118,17 +125,17 @@ export function LibraryItem({ entry }: { entry: LibraryEntryView }) {
           disabled={isPending}
           className="rounded-md bg-foreground px-3 py-1 text-background hover:opacity-90 disabled:opacity-50"
         >
-          {isPending ? "..." : "Сохранить"}
+          {isPending ? "..." : t.save}
         </button>
 
-        {savedAt && !isPending && <span className="text-xs text-green-600">Сохранено</span>}
+        {savedAt && !isPending && <span className="text-xs text-green-600">{t.saved}</span>}
 
         <button
           onClick={handleRemove}
           disabled={isPending}
           className="text-red-500 hover:underline disabled:opacity-50"
         >
-          Удалить
+          {t.remove}
         </button>
       </div>
     </li>
