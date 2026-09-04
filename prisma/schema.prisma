@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum GameStatus {
+  WANT_TO_PLAY
+  PLAYING
+  COMPLETED
+  DROPPED
+  ON_HOLD
+}
+
+enum ExternalSource {
+  RAWG
+  IGDB
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String?
+  username     String   @unique
+  displayName  String?
+  avatarUrl    String?
+  bio          String?
+  createdAt    DateTime @default(now())
+
+  library UserGame[]
+
+  @@map("users")
+}
+
+// Локальный кэш игр из внешнего API (RAWG/IGDB) — не мастер-копия каталога.
+model Game {
+  id             String         @id @default(uuid())
+  externalSource ExternalSource
+  externalId     String
+  title          String
+  coverUrl       String?
+  genres         String[]
+  platforms      String[]
+  releaseDate    DateTime?
+  summary        String?
+  cachedAt       DateTime       @default(now())
+
+  library UserGame[]
+
+  @@unique([externalSource, externalId])
+  @@map("games")
+}
+
+// Запись библиотеки пользователя — ядро продукта (статус, прогресс, оценка).
+model UserGame {
+  id              String     @id @default(uuid())
+  userId          String
+  gameId          String
+  status          GameStatus @default(WANT_TO_PLAY)
+  progressPercent Int?
+  hoursPlayed     Decimal?   @db.Decimal(6, 1)
+  rating          Int?
+  startedAt       DateTime?
+  finishedAt      DateTime?
+  notes           String?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  game Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, gameId])
+  @@map("user_games")
+}
