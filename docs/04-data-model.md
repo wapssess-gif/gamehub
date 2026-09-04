@@ -3,6 +3,14 @@
 Черновая модель для MVP + заложенные поля под S/C-функции. Финальные
 типы полей уточняются на этапе выбора ORM/СУБД (см. [05-architecture.md](05-architecture.md)).
 
+**Статус (2026-09-04):** `User`, `Game`, `UserGame` реализованы в
+[prisma/schema.prisma](../prisma/schema.prisma) как часть MVP —
+без изменений полей относительно черновика ниже (имена в camelCase
+по конвенции Prisma/TS вместо snake_case). `Review`, `Screenshot`,
+`Collection`/`CollectionGame`, `Achievement`/`UserAchievement`,
+`Friendship`, `ActivityEvent` пока не реализованы — они появятся
+на Этапах 2–3 (см. [06-roadmap.md](06-roadmap.md)).
+
 ## Сущности
 
 ### User
