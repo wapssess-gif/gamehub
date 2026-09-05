@@ -89,8 +89,7 @@ export default async function GameDetailPage({
   const playtime = rawgGame?.playtime ?? null;
   const website = rawgGame?.website ?? null;
   const esrbRating = rawgGame?.esrb_rating?.name ?? null;
-  const rawSummary = rawgGame?.description_raw ?? dbGame?.summary ?? null;
-  const summary = await translateText(rawSummary, locale);
+  const summary = rawgGame?.description_raw ?? dbGame?.summary ?? null;
 
   const userGameRow = dbGame?.library && dbGame.library.length > 0 ? dbGame.library[0] : null;
 

@@ -89,9 +89,9 @@ export default async function HomePage() {
                 href={`/games/${game.id}`}
                 className="group overflow-hidden rounded-lg border border-white/10 bg-black/40 transition-all hover:border-red-900 hover:bg-black/60"
               >
-                {game.backgroundImage && (
+                {game.coverUrl && (
                   <img
-                    src={game.backgroundImage}
+                    src={game.coverUrl}
                     alt={game.title}
                     className="h-40 w-full object-cover"
                   />
