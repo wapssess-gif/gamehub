@@ -111,12 +111,12 @@ export default async function HomePage() {
         <h2 className="mb-8 text-2xl font-bold">{t.whyGamehub}</h2>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {[
-            { icon: "📚", title: "Game Library", desc: "Track all your games in one place" },
-            { icon: "📊", title: "Statistics", desc: "Hours played, ratings, favorite genres" },
-            { icon: "👥", title: "Social", desc: "Find friends and follow their progress" },
-            { icon: "🎯", title: "Progress", desc: "Mark completion % and playtime" },
-            { icon: "🌍", title: "Discover", desc: "Browse 800k+ games from RAWG" },
-            { icon: "🎨", title: "Minimal Design", desc: "Clean interface, no clutter" },
+            { icon: "📚", title: t.gameLibrary, desc: t.gameLibraryDesc },
+            { icon: "📊", title: t.statistics, desc: t.statisticsDesc },
+            { icon: "👥", title: t.social, desc: t.socialDesc },
+            { icon: "🎯", title: t.progress, desc: t.progressDesc },
+            { icon: "🌍", title: t.discover, desc: t.discoverDesc },
+            { icon: "🎨", title: t.minimalDesign, desc: t.minimalDesignDesc },
           ].map((feature, i) => (
             <div key={i} className="rounded-lg border border-white/10 bg-black/40 p-4">
               <div className="mb-2 text-3xl">{feature.icon}</div>

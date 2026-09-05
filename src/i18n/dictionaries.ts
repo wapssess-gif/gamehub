@@ -20,6 +20,18 @@ export type Dictionary = {
     popularGames: string;
     latestAdditions: string;
     whyGamehub: string;
+    gameLibrary: string;
+    gameLibraryDesc: string;
+    statistics: string;
+    statisticsDesc: string;
+    social: string;
+    socialDesc: string;
+    progress: string;
+    progressDesc: string;
+    discover: string;
+    discoverDesc: string;
+    minimalDesign: string;
+    minimalDesignDesc: string;
     readyToStart: string;
     readyToStartDesc: string;
     createAccount: string;
@@ -201,6 +213,18 @@ const ru: Dictionary = {
     popularGames: "⭐ Популярные игры",
     latestAdditions: "🆕 Новые добавления",
     whyGamehub: "✨ Почему GameHub?",
+    gameLibrary: "Библиотека игр",
+    gameLibraryDesc: "Следите за всеми своими играми в одном месте",
+    statistics: "Статистика",
+    statisticsDesc: "Часы игры, оценки, любимые жанры",
+    social: "Социум",
+    socialDesc: "Найдите друзей и следите за их прогрессом",
+    progress: "Прогресс",
+    progressDesc: "Отмечайте процент завершения и часы игры",
+    discover: "Открытие",
+    discoverDesc: "Смотрите 800k+ игр из RAWG",
+    minimalDesign: "Минималистичный дизайн",
+    minimalDesignDesc: "Чистый интерфейс без лишнего",
     readyToStart: "Готовы начать?",
     readyToStartDesc: "Присоединитесь к тысячам геймеров, управляющих своими библиотеками на GameHub",
     createAccount: "Создать аккаунт",
@@ -389,6 +413,18 @@ const en: Dictionary = {
     popularGames: "⭐ Popular Games",
     latestAdditions: "🆕 Latest Additions",
     whyGamehub: "✨ Why GameHub?",
+    gameLibrary: "Game Library",
+    gameLibraryDesc: "Track all your games in one place",
+    statistics: "Statistics",
+    statisticsDesc: "Hours played, ratings, favorite genres",
+    social: "Social",
+    socialDesc: "Find friends and follow their progress",
+    progress: "Progress",
+    progressDesc: "Mark completion % and playtime",
+    discover: "Discover",
+    discoverDesc: "Browse 800k+ games from RAWG",
+    minimalDesign: "Minimal Design",
+    minimalDesignDesc: "Clean interface, no clutter",
     readyToStart: "Ready to start?",
     readyToStartDesc: "Join thousands of gamers managing their libraries on GameHub",
     createAccount: "Create Account",
