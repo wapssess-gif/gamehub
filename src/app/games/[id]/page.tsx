@@ -8,6 +8,7 @@ import { getRawgGame, type RawgGame } from "@/lib/rawg";
 import { getLocale } from "@/i18n/getLocale";
 import { getDictionary } from "@/i18n/dictionaries";
 import { GameLibraryCard, type UserGameDetailView } from "@/components/GameLibraryCard";
+import { translateText } from "@/lib/translate";
 
 export async function generateMetadata({
   params,
@@ -88,7 +89,8 @@ export default async function GameDetailPage({
   const playtime = rawgGame?.playtime ?? null;
   const website = rawgGame?.website ?? null;
   const esrbRating = rawgGame?.esrb_rating?.name ?? null;
-  const summary = rawgGame?.description_raw ?? dbGame?.summary ?? null;
+  const rawSummary = rawgGame?.description_raw ?? dbGame?.summary ?? null;
+  const summary = await translateText(rawSummary, locale);
 
   const userGameRow = dbGame?.library && dbGame.library.length > 0 ? dbGame.library[0] : null;
 
