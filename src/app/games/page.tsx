@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { listRawgGenres, listRawgPlatforms, searchRawgGames } from "@/lib/rawg";
@@ -99,18 +100,23 @@ export default async function GamesCatalogPage({
           return (
             <li
               key={externalId}
-              className="flex flex-col gap-2 rounded-md border border-black/10 p-3 dark:border-white/10"
+              className="flex flex-col gap-2 rounded-md border border-black/10 p-3 dark:border-white/10 hover:border-black/20 dark:hover:border-white/20 transition-colors"
             >
               {game.background_image && (
-                <Image
-                  src={game.background_image}
-                  alt={game.name}
-                  width={320}
-                  height={180}
-                  className="h-40 w-full rounded object-cover"
-                />
+                <Link href={`/games/${externalId}`} className="group overflow-hidden rounded">
+                  <Image
+                    src={game.background_image}
+                    alt={game.name}
+                    width={320}
+                    height={180}
+                    className="h-40 w-full rounded object-cover transition-transform duration-200 group-hover:scale-105"
+                  />
+                </Link>
               )}
-              <p className="font-medium">{game.name}</p>
+              <Link href={`/games/${externalId}`} className="font-medium hover:underline flex items-center justify-between">
+                <span>{game.name}</span>
+                <span className="text-xs text-black/40 dark:text-white/40">→</span>
+              </Link>
               <p className="text-xs text-black/60 dark:text-white/60">
                 {game.released ?? t.unknownDate} ·{" "}
                 {game.genres?.map((g) => g.name).join(", ") || t.unknownGenre}

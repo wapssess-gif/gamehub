@@ -64,6 +64,7 @@ export default async function LibraryPage() {
                     hoursPlayed: entry.hoursPlayed ? Number(entry.hoursPlayed) : null,
                     rating: entry.rating,
                     game: {
+                      id: entry.game.id,
                       title: entry.game.title,
                       coverUrl: entry.game.coverUrl,
                       genres: entry.game.genres,

@@ -45,6 +45,8 @@ export async function addGameToLibrary(externalId: string) {
 
   revalidatePath("/library");
   revalidatePath("/games");
+  revalidatePath(`/games/${externalId}`);
+  revalidatePath(`/games/${game.id}`);
 }
 
 export type LibraryUpdate = {
@@ -57,12 +59,18 @@ export type LibraryUpdate = {
 export async function updateLibraryEntry(entryId: string, data: LibraryUpdate) {
   const userId = await requireUserId();
 
-  await prisma.userGame.update({
+  const updated = await prisma.userGame.update({
     where: { id: entryId, userId },
     data,
+    select: { gameId: true, game: { select: { externalId: true } } },
   });
 
   revalidatePath("/library");
+  revalidatePath("/games");
+  if (updated) {
+    revalidatePath(`/games/${updated.gameId}`);
+    revalidatePath(`/games/${updated.game.externalId}`);
+  }
 }
 
 export async function changeLibraryStatus(entryId: string, status: GameStatus) {
@@ -74,21 +82,34 @@ export async function changeLibraryStatus(entryId: string, status: GameStatus) {
   }
 
   const now = new Date();
-  await prisma.userGame.update({
+  const updated = await prisma.userGame.update({
     where: { id: entryId, userId },
     data: {
       status,
       startedAt: status === "PLAYING" && !entry.startedAt ? now : entry.startedAt,
       finishedAt: status === "COMPLETED" ? now : entry.finishedAt,
     },
+    select: { gameId: true, game: { select: { externalId: true } } },
   });
 
   revalidatePath("/library");
+  revalidatePath("/games");
+  if (updated) {
+    revalidatePath(`/games/${updated.gameId}`);
+    revalidatePath(`/games/${updated.game.externalId}`);
+  }
 }
 
 export async function removeLibraryEntry(entryId: string) {
   const userId = await requireUserId();
-  await prisma.userGame.delete({ where: { id: entryId, userId } });
+  const deleted = await prisma.userGame.delete({
+    where: { id: entryId, userId },
+    select: { gameId: true, game: { select: { externalId: true } } },
+  });
   revalidatePath("/library");
   revalidatePath("/games");
+  if (deleted) {
+    revalidatePath(`/games/${deleted.gameId}`);
+    revalidatePath(`/games/${deleted.game.externalId}`);
+  }
 }

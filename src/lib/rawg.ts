@@ -4,10 +4,22 @@ export type RawgGame = {
   id: number;
   name: string;
   background_image: string | null;
+  background_image_additional?: string | null;
   released: string | null;
-  genres?: { name: string }[];
-  platforms?: { platform: { name: string } }[] | null;
+  genres?: { id?: number; name: string }[];
+  platforms?: { platform: { id?: number; name: string } }[] | null;
   description_raw?: string;
+  description?: string;
+  metacritic?: number | null;
+  metacritic_url?: string | null;
+  website?: string | null;
+  rating?: number | null;
+  rating_top?: number | null;
+  ratings_count?: number | null;
+  playtime?: number | null;
+  developers?: { id: number; name: string }[];
+  publishers?: { id: number; name: string }[];
+  esrb_rating?: { id: number; name: string } | null;
 };
 
 export type RawgTaxonomy = { id: number; name: string; slug: string };

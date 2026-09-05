@@ -53,6 +53,7 @@ export type Dictionary = {
     remove: string;
     removeConfirm: string;
     unknownGenre: string;
+    details: string;
   };
   search: {
     placeholder: string;
@@ -88,6 +89,38 @@ export type Dictionary = {
     loginToAdd: string;
     noResults: string;
     unavailable: string;
+  };
+  gameDetails: {
+    backToLibrary: string;
+    backToCatalog: string;
+    about: string;
+    info: string;
+    releaseDate: string;
+    genres: string;
+    platforms: string;
+    developers: string;
+    publishers: string;
+    metacritic: string;
+    rating: string;
+    averagePlaytime: string;
+    hours: string;
+    website: string;
+    esrbRating: string;
+    inLibraryStatus: string;
+    notInLibrary: string;
+    addToLibrary: string;
+    loginToAdd: string;
+    notes: string;
+    notesPlaceholder: string;
+    saveNotes: string;
+    saved: string;
+    saveChanges: string;
+    unknown: string;
+    notFound: string;
+    notFoundDesc: string;
+    addedOn: string;
+    startedOn: string;
+    finishedOn: string;
   };
 };
 
@@ -150,6 +183,7 @@ const ru: Dictionary = {
     remove: "Удалить",
     removeConfirm: "Удалить «{title}» из библиотеки?",
     unknownGenre: "жанр неизвестен",
+    details: "Подробнее",
   },
   search: {
     placeholder: "Найти игру по названию...",
@@ -185,6 +219,38 @@ const ru: Dictionary = {
     loginToAdd: "Войдите, чтобы добавить в библиотеку",
     noResults: "Ничего не найдено.",
     unavailable: "Каталог недоступен: не настроен RAWG_API_KEY (см. .env.example).",
+  },
+  gameDetails: {
+    backToLibrary: "← В библиотеку",
+    backToCatalog: "← В каталог",
+    about: "Об игре",
+    info: "Информация",
+    releaseDate: "Дата выхода",
+    genres: "Жанры",
+    platforms: "Платформы",
+    developers: "Разработчики",
+    publishers: "Издатели",
+    metacritic: "Metacritic",
+    rating: "Рейтинг RAWG",
+    averagePlaytime: "Среднее время",
+    hours: "ч.",
+    website: "Официальный сайт",
+    esrbRating: "Возрастной рейтинг",
+    inLibraryStatus: "В вашей библиотеке",
+    notInLibrary: "Этой игры нет в вашей библиотеке",
+    addToLibrary: "Добавить в библиотеку",
+    loginToAdd: "Войдите, чтобы добавить в библиотеку",
+    notes: "Личные заметки",
+    notesPlaceholder: "Напишите свои впечатления, мысли или заметки об игре...",
+    saveNotes: "Сохранить заметки",
+    saved: "Сохранено",
+    saveChanges: "Сохранить изменения",
+    unknown: "Не указано",
+    notFound: "Игра не найдена",
+    notFoundDesc: "К сожалению, запрошенная игра не найдена.",
+    addedOn: "Добавлено в библиотеку:",
+    startedOn: "Начато:",
+    finishedOn: "Пройдено:",
   },
 };
 
@@ -247,6 +313,7 @@ const en: Dictionary = {
     remove: "Remove",
     removeConfirm: 'Remove "{title}" from your library?',
     unknownGenre: "genre unknown",
+    details: "Details",
   },
   search: {
     placeholder: "Search for a game by title...",
@@ -282,6 +349,38 @@ const en: Dictionary = {
     loginToAdd: "Log in to add to your library",
     noResults: "Nothing found.",
     unavailable: "Catalog unavailable: RAWG_API_KEY is not configured (see .env.example).",
+  },
+  gameDetails: {
+    backToLibrary: "← Back to library",
+    backToCatalog: "← Back to catalog",
+    about: "About the game",
+    info: "Information",
+    releaseDate: "Release date",
+    genres: "Genres",
+    platforms: "Platforms",
+    developers: "Developers",
+    publishers: "Publishers",
+    metacritic: "Metacritic",
+    rating: "RAWG Rating",
+    averagePlaytime: "Average playtime",
+    hours: "hrs",
+    website: "Official website",
+    esrbRating: "Age rating",
+    inLibraryStatus: "In your library",
+    notInLibrary: "This game is not in your library",
+    addToLibrary: "Add to library",
+    loginToAdd: "Log in to add to your library",
+    notes: "Personal notes",
+    notesPlaceholder: "Write your impressions, thoughts or notes about the game...",
+    saveNotes: "Save notes",
+    saved: "Saved",
+    saveChanges: "Save changes",
+    unknown: "Not specified",
+    notFound: "Game not found",
+    notFoundDesc: "Sorry, the requested game could not be found.",
+    addedOn: "Added to library:",
+    startedOn: "Started:",
+    finishedOn: "Completed:",
   },
 };
 

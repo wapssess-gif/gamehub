@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import type { GameStatus } from "@prisma/client";
 import { changeLibraryStatus, removeLibraryEntry, updateLibraryEntry } from "@/lib/actions/library";
 import { STATUS_ORDER } from "@/lib/labels";
@@ -14,6 +15,7 @@ export type LibraryEntryView = {
   hoursPlayed: number | null;
   rating: number | null;
   game: {
+    id: string;
     title: string;
     coverUrl: string | null;
     genres: string[];
@@ -58,24 +60,32 @@ export function LibraryItem({
   }
 
   return (
-    <li className="flex flex-col gap-3 rounded-md border border-black/10 p-3 sm:flex-row sm:items-center dark:border-white/10">
-      <div className="flex flex-1 items-center gap-3">
+    <li className="flex flex-col gap-3 rounded-md border border-black/10 p-3 sm:flex-row sm:items-center dark:border-white/10 hover:border-black/20 dark:hover:border-white/20 transition-colors">
+      <Link
+        href={`/games/${entry.game.id}`}
+        className="group flex flex-1 items-center gap-3 transition-opacity hover:opacity-85"
+      >
         {entry.game.coverUrl && (
           <Image
             src={entry.game.coverUrl}
             alt={entry.game.title}
             width={56}
             height={56}
-            className="h-14 w-14 rounded object-cover"
+            className="h-14 w-14 rounded object-cover shadow-sm transition-transform group-hover:scale-105"
           />
         )}
         <div>
-          <p className="font-medium">{entry.game.title}</p>
+          <p className="font-medium group-hover:underline flex items-center gap-1.5">
+            <span>{entry.game.title}</span>
+            <span className="text-xs text-black/40 dark:text-white/40 group-hover:translate-x-0.5 transition-transform">
+              →
+            </span>
+          </p>
           <p className="text-xs text-black/60 dark:text-white/60">
             {entry.game.genres.join(", ") || t.unknownGenre}
           </p>
         </div>
-      </div>
+      </Link>
 
       <div className="flex flex-wrap items-center gap-2 text-sm">
         <select
@@ -130,10 +140,17 @@ export function LibraryItem({
 
         {savedAt && !isPending && <span className="text-xs text-green-600">{t.saved}</span>}
 
+        <Link
+          href={`/games/${entry.game.id}`}
+          className="rounded-md border border-black/20 px-2.5 py-1 text-xs hover:bg-black/5 dark:border-white/20 dark:hover:bg-white/5"
+        >
+          {t.details}
+        </Link>
+
         <button
           onClick={handleRemove}
           disabled={isPending}
-          className="text-red-500 hover:underline disabled:opacity-50"
+          className="text-red-500 hover:underline disabled:opacity-50 text-xs"
         >
           {t.remove}
         </button>

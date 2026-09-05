@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useTransition } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { addGameToLibrary } from "@/lib/actions/library";
 import type { Dictionary } from "@/i18n/dictionaries";
 
@@ -88,25 +89,33 @@ export function GameSearchAdd({ t }: { t: Dictionary["search"] }) {
           {visibleResults.map((game) => (
             <li
               key={game.externalId}
-              className="flex items-center justify-between gap-3 rounded-md border border-black/10 p-2 dark:border-white/10"
+              className="flex items-center justify-between gap-3 rounded-md border border-black/10 p-2 dark:border-white/10 hover:border-black/20 dark:hover:border-white/20 transition-colors"
             >
-              <div className="flex items-center gap-3">
+              <Link
+                href={`/games/${game.externalId}`}
+                className="flex flex-1 items-center gap-3 group hover:opacity-85 transition-opacity"
+              >
                 {game.coverUrl && (
                   <Image
                     src={game.coverUrl}
                     alt={game.title}
                     width={48}
                     height={48}
-                    className="h-12 w-12 rounded object-cover"
+                    className="h-12 w-12 rounded object-cover shadow-xs transition-transform group-hover:scale-105"
                   />
                 )}
                 <div>
-                  <p className="font-medium">{game.title}</p>
+                  <p className="font-medium group-hover:underline flex items-center gap-1.5">
+                    <span>{game.title}</span>
+                    <span className="text-xs text-black/40 dark:text-white/40 group-hover:translate-x-0.5 transition-transform">
+                      →
+                    </span>
+                  </p>
                   <p className="text-xs text-black/60 dark:text-white/60">
                     {game.releaseDate ?? t.unknownDate} · {game.genres.join(", ") || t.unknownGenre}
                   </p>
                 </div>
-              </div>
+              </Link>
               <button
                 onClick={() => handleAdd(game.externalId)}
                 disabled={isPending && addingId === game.externalId}
