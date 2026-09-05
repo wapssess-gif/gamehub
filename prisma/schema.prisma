@@ -42,7 +42,8 @@ model User {
   privacy      ProfilePrivacy @default(PUBLIC)
   createdAt    DateTime       @default(now())
 
-  library UserGame[]
+  library      UserGame[]
+  collections  Collection[]
 
   following              Follow[]     @relation("follower")
   followers              Follow[]     @relation("following")
@@ -50,6 +51,36 @@ model User {
   receivedFriendRequests Friendship[] @relation("addressee")
 
   @@map("users")
+}
+
+// Пользовательские коллекции игр (плейлисты, подборки)
+model Collection {
+  id          String   @id @default(uuid())
+  userId      String
+  name        String
+  description String?
+  isPublic    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user  User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items CollectionItem[]
+
+  @@unique([userId, name])
+  @@map("collections")
+}
+
+model CollectionItem {
+  id           String   @id @default(uuid())
+  collectionId String
+  gameId       String
+  addedAt      DateTime @default(now())
+
+  collection Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  game       Game       @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  @@unique([collectionId, gameId])
+  @@map("collection_items")
 }
 
 // Односторонняя подписка: follower следит за прогрессом following.
@@ -97,7 +128,8 @@ model Game {
   summary        String?
   cachedAt       DateTime       @default(now())
 
-  library UserGame[]
+  library        UserGame[]
+  collectionItems CollectionItem[]
 
   @@unique([externalSource, externalId])
   @@map("games")
