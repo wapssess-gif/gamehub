@@ -129,3 +129,23 @@ export async function removeAvatar(): Promise<AvatarActionResult> {
   revalidateProfile();
   return { ok: true, url: null };
 }
+
+export async function updateDisplayNameBio(
+  displayName: string,
+  bio: string
+): Promise<void> {
+  const userId = await requireUserId();
+
+  const trimmedDisplayName = displayName.trim().slice(0, 50);
+  const trimmedBio = bio.trim().slice(0, 300);
+
+  await prisma.user.update({
+    where: { id: userId },
+    data: {
+      displayName: trimmedDisplayName || null,
+      bio: trimmedBio || null,
+    },
+  });
+
+  revalidateProfile();
+}

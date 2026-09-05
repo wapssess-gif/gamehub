@@ -8,6 +8,7 @@ import { Avatar } from "@/components/Avatar";
 import { AvatarUpload } from "@/components/AvatarUpload";
 import { PrivacyToggle } from "@/components/PrivacyToggle";
 import { StatsSummary } from "@/components/StatsSummary";
+import { DisplayNameBioEdit } from "@/components/DisplayNameBioEdit";
 import { getLocale } from "@/i18n/getLocale";
 import { getDictionary } from "@/i18n/dictionaries";
 
@@ -34,7 +35,11 @@ export default async function ProfilePage() {
         </div>
       </section>
 
-      {user.bio && <p className="text-black/80 dark:text-white/80">{user.bio}</p>}
+      <DisplayNameBioEdit
+        initialDisplayName={user.displayName}
+        initialBio={user.bio}
+        t={t.profile}
+      />
 
       <section className="flex flex-wrap gap-4 text-sm">
         <Link href={`/u/${user.username}`} className="underline">

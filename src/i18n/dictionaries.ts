@@ -95,6 +95,13 @@ export type Dictionary = {
   };
   profile: {
     statsHeading: string;
+    displayNameHeading: string;
+    displayNameLabel: string;
+    displayNameHint: string;
+    bioHeading: string;
+    bioLabel: string;
+    bioPlaceholder: string;
+    bioHint: string;
     avatarHeading: string;
     avatarHint: string;
     avatarUpload: string;
@@ -107,6 +114,10 @@ export type Dictionary = {
     privacyPrivate: string;
     privacyPublicHint: string;
     privacyPrivateHint: string;
+    save: string;
+    saving: string;
+    saved: string;
+    cancel: string;
     errors: {
       avatarMissing: string;
       avatarTooLarge: string;
@@ -294,6 +305,13 @@ const ru: Dictionary = {
   },
   profile: {
     statsHeading: "Статистика",
+    displayNameHeading: "Имя профиля",
+    displayNameLabel: "Имя",
+    displayNameHint: "Как тебя зовут? (1-50 символов)",
+    bioHeading: "О себе",
+    bioLabel: "Описание",
+    bioPlaceholder: "Расскажи о себе, своих интересах или любимых жанрах…",
+    bioHint: "Макс. 300 символов. Будет видно всем.",
     avatarHeading: "Аватар",
     avatarHint: "JPG, PNG или WebP. Изображение будет уменьшено до 256×256.",
     avatarUpload: "Загрузить фото",
@@ -306,6 +324,10 @@ const ru: Dictionary = {
     privacyPrivate: "Приватный",
     privacyPublicHint: "Библиотеку и статистику видит любой зарегистрированный пользователь.",
     privacyPrivateHint: "Библиотеку и статистику видят только принятые друзья.",
+    save: "Сохранить",
+    saving: "Сохранение…",
+    saved: "Сохранено",
+    cancel: "Отмена",
     errors: {
       avatarMissing: "Файл не выбран.",
       avatarTooLarge: "Файл слишком большой.",
@@ -494,6 +516,13 @@ const en: Dictionary = {
   },
   profile: {
     statsHeading: "Stats",
+    displayNameHeading: "Profile name",
+    displayNameLabel: "Name",
+    displayNameHint: "What's your name? (1-50 characters)",
+    bioHeading: "About you",
+    bioLabel: "Bio",
+    bioPlaceholder: "Tell us about yourself, your interests, or favorite genres…",
+    bioHint: "Max 300 characters. Visible to everyone.",
     avatarHeading: "Avatar",
     avatarHint: "JPG, PNG or WebP. The image will be resized to 256×256.",
     avatarUpload: "Upload photo",
@@ -506,6 +535,10 @@ const en: Dictionary = {
     privacyPrivate: "Private",
     privacyPublicHint: "Any registered user can see your library and stats.",
     privacyPrivateHint: "Only accepted friends can see your library and stats.",
+    save: "Save",
+    saving: "Saving…",
+    saved: "Saved",
+    cancel: "Cancel",
     errors: {
       avatarMissing: "No file selected.",
       avatarTooLarge: "The file is too large.",
