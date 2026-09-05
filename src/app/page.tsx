@@ -5,11 +5,15 @@ import { getLocale } from "@/i18n/getLocale";
 import { getDictionary } from "@/i18n/dictionaries";
 
 export default async function HomePage() {
-  const [session, locale, games] = await Promise.all([
+  const [session, locale, games, latestGames] = await Promise.all([
     auth(),
     getLocale(),
     prisma.game.findMany({
       take: 6,
+    }),
+    prisma.game.findMany({
+      take: 6,
+      orderBy: { cachedAt: "desc" },
     }),
   ]);
   const t = getDictionary(locale).home;
@@ -73,6 +77,34 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Latest Additions */}
+      {latestGames.length > 0 && (
+        <section className="mx-auto w-full max-w-5xl px-4">
+          <h2 className="mb-8 text-2xl font-bold">🆕 Latest Additions</h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {latestGames.map((game) => (
+              <Link
+                key={game.id}
+                href={`/games/${game.id}`}
+                className="group overflow-hidden rounded-lg border border-white/10 bg-black/40 transition-all hover:border-red-900 hover:bg-black/60"
+              >
+                {game.backgroundImage && (
+                  <img
+                    src={game.backgroundImage}
+                    alt={game.title}
+                    className="h-40 w-full object-cover"
+                  />
+                )}
+                <div className="p-3">
+                  <h3 className="font-semibold line-clamp-1 group-hover:text-red-400">{game.title}</h3>
+                  <p className="text-xs text-white/60">{game.releaseDate?.getFullYear()}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Features */}
       <section className="mx-auto w-full max-w-5xl px-4">

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { env } from "@/env"; // side effect: validate env on startup
 import { Navbar } from "@/components/Navbar";
+import { ThemeLoader } from "@/components/ThemeLoader";
 import { getLocale } from "@/i18n/getLocale";
 import { getDictionary } from "@/i18n/dictionaries";
 import "./globals.css";
@@ -35,16 +35,9 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       lang={locale}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <head>
-        <Script
-          id="theme-loader"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `(function(){const t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t)})()`,
-          }}
-        />
-      </head>
+      <head />
       <body className="min-h-full flex flex-col">
+        <ThemeLoader />
         <Navbar />
         <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6">{children}</main>
       </body>
