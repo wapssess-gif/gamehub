@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { env } from "@/env"; // side effect: validate env on startup
 import { Navbar } from "@/components/Navbar";
 import { getLocale } from "@/i18n/getLocale";
 import { getDictionary } from "@/i18n/dictionaries";
