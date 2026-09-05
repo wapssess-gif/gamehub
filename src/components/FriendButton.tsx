@@ -10,9 +10,9 @@ import {
 import type { FriendshipView } from "@/lib/social";
 import type { Dictionary } from "@/i18n/dictionaries";
 
-const BASE = "rounded-md px-3 py-1.5 text-sm disabled:opacity-50";
-const PRIMARY = `${BASE} bg-foreground text-background hover:opacity-90`;
-const SECONDARY = `${BASE} border border-black/20 hover:bg-black/5 dark:border-white/20 dark:hover:bg-white/5`;
+const BASE = "rounded-md px-3 py-1.5 text-sm font-medium transition-all duration-200 disabled:opacity-50";
+const PRIMARY = `${BASE} bg-white text-black hover:bg-red-900 hover:text-white active:bg-red-950 disabled:hover:bg-white disabled:hover:text-black`;
+const SECONDARY = `${BASE} border border-white/30 text-white hover:bg-red-900 hover:border-red-900 active:bg-red-950 disabled:hover:bg-transparent disabled:hover:border-white/30`;
 
 export function FriendButton({
   targetUserId,

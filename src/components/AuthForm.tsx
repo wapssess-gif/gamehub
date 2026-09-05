@@ -43,7 +43,7 @@ export function AuthForm({
       <button
         type="submit"
         disabled={pending}
-        className="rounded-md bg-foreground px-4 py-2 text-background hover:opacity-90 disabled:opacity-50"
+        className="rounded-md bg-white px-4 py-2 text-black font-medium transition-all duration-200 hover:bg-red-900 hover:text-white active:bg-red-950 disabled:opacity-50 disabled:hover:bg-white disabled:hover:text-black"
       >
         {pending ? pendingLabel : submitLabel}
       </button>

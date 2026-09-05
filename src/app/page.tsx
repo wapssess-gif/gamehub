@@ -16,7 +16,7 @@ export default async function HomePage() {
         {session?.user ? (
           <Link
             href="/library"
-            className="rounded-md bg-foreground px-4 py-2 text-background hover:opacity-90"
+            className="rounded-md bg-white px-4 py-2 text-black font-medium transition-all duration-200 hover:bg-red-900 hover:text-white active:bg-red-950"
           >
             {t.myLibrary}
           </Link>
@@ -24,13 +24,13 @@ export default async function HomePage() {
           <>
             <Link
               href="/register"
-              className="rounded-md bg-foreground px-4 py-2 text-background hover:opacity-90"
+              className="rounded-md bg-white px-4 py-2 text-black font-medium transition-all duration-200 hover:bg-red-900 hover:text-white active:bg-red-950"
             >
               {t.start}
             </Link>
             <Link
               href="/games"
-              className="rounded-md border border-black/20 px-4 py-2 hover:bg-black/5 dark:border-white/20 dark:hover:bg-white/10"
+              className="rounded-md border border-white/30 px-4 py-2 text-white font-medium transition-all duration-200 hover:bg-red-900 hover:border-red-900 active:bg-red-950"
             >
               {t.browseCatalog}
             </Link>

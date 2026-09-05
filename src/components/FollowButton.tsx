@@ -36,8 +36,8 @@ export function FollowButton({
       disabled={isPending}
       className={
         following
-          ? "rounded-md border border-black/20 px-3 py-1.5 text-sm hover:bg-black/5 disabled:opacity-50 dark:border-white/20 dark:hover:bg-white/5"
-          : "rounded-md bg-foreground px-3 py-1.5 text-sm text-background hover:opacity-90 disabled:opacity-50"
+          ? "rounded-md border border-white/30 px-3 py-1.5 text-sm text-white font-medium transition-all duration-200 hover:bg-red-900 hover:border-red-900 disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:border-white/30"
+          : "rounded-md bg-white px-3 py-1.5 text-sm text-black font-medium transition-all duration-200 hover:bg-red-900 hover:text-white disabled:opacity-50 disabled:hover:bg-white disabled:hover:text-black"
       }
     >
       {following ? t.unfollow : t.follow}
