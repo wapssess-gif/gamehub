@@ -17,6 +17,12 @@ export type Dictionary = {
     myLibrary: string;
     start: string;
     browseCatalog: string;
+    popularGames: string;
+    latestAdditions: string;
+    whyGamehub: string;
+    readyToStart: string;
+    readyToStartDesc: string;
+    createAccount: string;
   };
   auth: {
     loginTitle: string;
@@ -192,6 +198,12 @@ const ru: Dictionary = {
     myLibrary: "Моя библиотека",
     start: "Начать",
     browseCatalog: "Смотреть каталог",
+    popularGames: "⭐ Популярные игры",
+    latestAdditions: "🆕 Новые добавления",
+    whyGamehub: "✨ Почему GameHub?",
+    readyToStart: "Готовы начать?",
+    readyToStartDesc: "Присоединитесь к тысячам геймеров, управляющих своими библиотеками на GameHub",
+    createAccount: "Создать аккаунт",
   },
   auth: {
     loginTitle: "Вход",
@@ -374,6 +386,12 @@ const en: Dictionary = {
     myLibrary: "My library",
     start: "Get started",
     browseCatalog: "Browse catalog",
+    popularGames: "⭐ Popular Games",
+    latestAdditions: "🆕 Latest Additions",
+    whyGamehub: "✨ Why GameHub?",
+    readyToStart: "Ready to start?",
+    readyToStartDesc: "Join thousands of gamers managing their libraries on GameHub",
+    createAccount: "Create Account",
   },
   auth: {
     loginTitle: "Log in",

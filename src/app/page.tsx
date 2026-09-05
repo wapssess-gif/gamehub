@@ -54,7 +54,7 @@ export default async function HomePage() {
 
       {/* Popular Games */}
       <section className="mx-auto w-full max-w-5xl px-4">
-        <h2 className="mb-8 text-2xl font-bold">⭐ Popular Games</h2>
+        <h2 className="mb-8 text-2xl font-bold">{t.popularGames}</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {games.map((game) => (
             <Link
@@ -62,9 +62,9 @@ export default async function HomePage() {
               href={`/games/${game.id}`}
               className="group overflow-hidden rounded-lg border border-white/10 bg-black/40 transition-all hover:border-red-900 hover:bg-black/60"
             >
-              {game.backgroundImage && (
+              {game.coverUrl && (
                 <img
-                  src={game.backgroundImage}
+                  src={game.coverUrl}
                   alt={game.title}
                   className="h-40 w-full object-cover"
                 />
@@ -81,7 +81,7 @@ export default async function HomePage() {
       {/* Latest Additions */}
       {latestGames.length > 0 && (
         <section className="mx-auto w-full max-w-5xl px-4">
-          <h2 className="mb-8 text-2xl font-bold">🆕 Latest Additions</h2>
+          <h2 className="mb-8 text-2xl font-bold">{t.latestAdditions}</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {latestGames.map((game) => (
               <Link
@@ -108,7 +108,7 @@ export default async function HomePage() {
 
       {/* Features */}
       <section className="mx-auto w-full max-w-5xl px-4">
-        <h2 className="mb-8 text-2xl font-bold">✨ Why GameHub?</h2>
+        <h2 className="mb-8 text-2xl font-bold">{t.whyGamehub}</h2>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {[
             { icon: "📚", title: "Game Library", desc: "Track all your games in one place" },
@@ -131,13 +131,13 @@ export default async function HomePage() {
       {!session?.user && (
         <section className="mx-auto w-full max-w-5xl px-4 text-center">
           <div className="rounded-lg border border-red-900/50 bg-gradient-to-r from-red-900/10 to-transparent p-8">
-            <h2 className="mb-2 text-2xl font-bold">Ready to start?</h2>
-            <p className="mb-6 text-white/70">Join thousands of gamers managing their libraries on GameHub</p>
+            <h2 className="mb-2 text-2xl font-bold">{t.readyToStart}</h2>
+            <p className="mb-6 text-white/70">{t.readyToStartDesc}</p>
             <Link
               href="/register"
               className="inline-block rounded-md bg-red-900 px-6 py-3 text-white font-medium transition-all hover:bg-red-800"
             >
-              Create Account
+              {t.createAccount}
             </Link>
           </div>
         </section>
