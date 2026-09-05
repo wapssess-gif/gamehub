@@ -20,19 +20,68 @@ enum ExternalSource {
   IGDB
 }
 
+enum ProfilePrivacy {
+  PUBLIC
+  PRIVATE
+}
+
+enum FriendshipStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+}
+
 model User {
-  id           String   @id @default(uuid())
-  email        String   @unique
+  id           String         @id @default(uuid())
+  email        String         @unique
   passwordHash String?
-  username     String   @unique
+  username     String         @unique
   displayName  String?
   avatarUrl    String?
   bio          String?
-  createdAt    DateTime @default(now())
+  privacy      ProfilePrivacy @default(PUBLIC)
+  createdAt    DateTime       @default(now())
 
   library UserGame[]
 
+  following              Follow[]     @relation("follower")
+  followers              Follow[]     @relation("following")
+  sentFriendRequests     Friendship[] @relation("requester")
+  receivedFriendRequests Friendship[] @relation("addressee")
+
   @@map("users")
+}
+
+// Односторонняя подписка: follower следит за прогрессом following.
+model Follow {
+  id          String   @id @default(uuid())
+  followerId  String
+  followingId String
+  createdAt   DateTime @default(now())
+
+  follower  User @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
+  following User @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@unique([followerId, followingId])
+  @@index([followingId])
+  @@map("follows")
+}
+
+// Взаимная дружба: одна строка на пару пользователей (см. src/lib/actions/social.ts).
+model Friendship {
+  id          String           @id @default(uuid())
+  requesterId String
+  addresseeId String
+  status      FriendshipStatus @default(PENDING)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  requester User @relation("requester", fields: [requesterId], references: [id], onDelete: Cascade)
+  addressee User @relation("addressee", fields: [addresseeId], references: [id], onDelete: Cascade)
+
+  @@unique([requesterId, addresseeId])
+  @@index([addresseeId])
+  @@map("friendships")
 }
 
 // Локальный кэш игр из внешнего API (RAWG/IGDB) — не мастер-копия каталога.

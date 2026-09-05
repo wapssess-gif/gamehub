@@ -5,6 +5,8 @@ export type Dictionary = {
   nav: {
     catalog: string;
     library: string;
+    people: string;
+    friends: string;
     profile: string;
     logout: string;
     login: string;
@@ -75,6 +77,55 @@ export type Dictionary = {
   };
   profile: {
     statsHeading: string;
+    avatarHeading: string;
+    avatarHint: string;
+    avatarUpload: string;
+    avatarChange: string;
+    avatarRemove: string;
+    avatarProcessing: string;
+    avatarSaved: string;
+    privacyHeading: string;
+    privacyPublic: string;
+    privacyPrivate: string;
+    privacyPublicHint: string;
+    privacyPrivateHint: string;
+    errors: {
+      avatarMissing: string;
+      avatarTooLarge: string;
+      avatarBadType: string;
+      avatarUploadFailed: string;
+      avatarStorageDisabled: string;
+    };
+  };
+  social: {
+    searchTitle: string;
+    searchPlaceholder: string;
+    searchSubmit: string;
+    searchHint: string;
+    noUsersFound: string;
+    follow: string;
+    unfollow: string;
+    addFriend: string;
+    requestSent: string;
+    cancelRequest: string;
+    acceptRequest: string;
+    declineRequest: string;
+    youAreFriends: string;
+    removeFriend: string;
+    friends: string;
+    followers: string;
+    following: string;
+    followsYou: string;
+    privateBadge: string;
+    privateProfileNotice: string;
+    editProfile: string;
+    viewPublicProfile: string;
+    connectionsTitle: string;
+    connectionsEmpty: string;
+    findPeople: string;
+    incomingRequests: string;
+    outgoingRequests: string;
+    emptyLibrary: string;
   };
   games: {
     title: string;
@@ -128,6 +179,8 @@ const ru: Dictionary = {
   nav: {
     catalog: "Каталог",
     library: "Библиотека",
+    people: "Люди",
+    friends: "Друзья",
     profile: "Профиль",
     logout: "Выйти",
     login: "Войти",
@@ -205,6 +258,56 @@ const ru: Dictionary = {
   },
   profile: {
     statsHeading: "Статистика",
+    avatarHeading: "Аватар",
+    avatarHint: "JPG, PNG или WebP. Изображение будет уменьшено до 256×256.",
+    avatarUpload: "Загрузить фото",
+    avatarChange: "Изменить фото",
+    avatarRemove: "Удалить",
+    avatarProcessing: "Обработка…",
+    avatarSaved: "Аватар обновлён",
+    privacyHeading: "Приватность профиля",
+    privacyPublic: "Публичный",
+    privacyPrivate: "Приватный",
+    privacyPublicHint: "Библиотеку и статистику видит любой зарегистрированный пользователь.",
+    privacyPrivateHint: "Библиотеку и статистику видят только принятые друзья.",
+    errors: {
+      avatarMissing: "Файл не выбран.",
+      avatarTooLarge: "Файл слишком большой.",
+      avatarBadType: "Поддерживаются только JPG, PNG и WebP.",
+      avatarUploadFailed: "Не удалось загрузить изображение. Попробуйте ещё раз.",
+      avatarStorageDisabled:
+        "Загрузка аватара недоступна: не настроен BLOB_READ_WRITE_TOKEN (см. .env.example).",
+    },
+  },
+  social: {
+    searchTitle: "Поиск пользователей",
+    searchPlaceholder: "Введите ник (@username)…",
+    searchSubmit: "Найти",
+    searchHint: "Введите минимум 2 символа ника.",
+    noUsersFound: "Пользователи не найдены.",
+    follow: "Подписаться",
+    unfollow: "Отписаться",
+    addFriend: "Добавить в друзья",
+    requestSent: "Запрос отправлен",
+    cancelRequest: "Отменить",
+    acceptRequest: "Принять",
+    declineRequest: "Отклонить",
+    youAreFriends: "Вы друзья",
+    removeFriend: "Удалить из друзей",
+    friends: "Друзья",
+    followers: "Подписчики",
+    following: "Подписки",
+    followsYou: "подписан(а) на вас",
+    privateBadge: "Приватный профиль",
+    privateProfileNotice: "Профиль приватный. Добавьтесь в друзья, чтобы видеть библиотеку и статистику.",
+    editProfile: "Редактировать профиль",
+    viewPublicProfile: "Мой публичный профиль",
+    connectionsTitle: "Друзья и подписки",
+    connectionsEmpty: "У вас пока нет связей.",
+    findPeople: "Найти людей",
+    incomingRequests: "Входящие запросы",
+    outgoingRequests: "Исходящие запросы",
+    emptyLibrary: "Библиотека пуста.",
   },
   games: {
     title: "Каталог игр",
@@ -258,6 +361,8 @@ const en: Dictionary = {
   nav: {
     catalog: "Catalog",
     library: "Library",
+    people: "People",
+    friends: "Friends",
     profile: "Profile",
     logout: "Log out",
     login: "Log in",
@@ -335,6 +440,56 @@ const en: Dictionary = {
   },
   profile: {
     statsHeading: "Stats",
+    avatarHeading: "Avatar",
+    avatarHint: "JPG, PNG or WebP. The image will be resized to 256×256.",
+    avatarUpload: "Upload photo",
+    avatarChange: "Change photo",
+    avatarRemove: "Remove",
+    avatarProcessing: "Processing…",
+    avatarSaved: "Avatar updated",
+    privacyHeading: "Profile privacy",
+    privacyPublic: "Public",
+    privacyPrivate: "Private",
+    privacyPublicHint: "Any registered user can see your library and stats.",
+    privacyPrivateHint: "Only accepted friends can see your library and stats.",
+    errors: {
+      avatarMissing: "No file selected.",
+      avatarTooLarge: "The file is too large.",
+      avatarBadType: "Only JPG, PNG and WebP are supported.",
+      avatarUploadFailed: "Could not upload the image. Please try again.",
+      avatarStorageDisabled:
+        "Avatar upload unavailable: BLOB_READ_WRITE_TOKEN is not configured (see .env.example).",
+    },
+  },
+  social: {
+    searchTitle: "Find people",
+    searchPlaceholder: "Enter a username (@username)…",
+    searchSubmit: "Search",
+    searchHint: "Type at least 2 characters of a username.",
+    noUsersFound: "No users found.",
+    follow: "Follow",
+    unfollow: "Unfollow",
+    addFriend: "Add friend",
+    requestSent: "Request sent",
+    cancelRequest: "Cancel",
+    acceptRequest: "Accept",
+    declineRequest: "Decline",
+    youAreFriends: "Friends",
+    removeFriend: "Remove friend",
+    friends: "Friends",
+    followers: "Followers",
+    following: "Following",
+    followsYou: "follows you",
+    privateBadge: "Private profile",
+    privateProfileNotice: "This profile is private. Become friends to see the library and stats.",
+    editProfile: "Edit profile",
+    viewPublicProfile: "My public profile",
+    connectionsTitle: "Friends & follows",
+    connectionsEmpty: "You have no connections yet.",
+    findPeople: "Find people",
+    incomingRequests: "Incoming requests",
+    outgoingRequests: "Outgoing requests",
+    emptyLibrary: "Library is empty.",
   },
   games: {
     title: "Game catalog",

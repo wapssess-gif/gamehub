@@ -1,12 +1,29 @@
 import Link from "next/link";
 import { auth, signOut } from "@/auth";
+import { prisma } from "@/lib/prisma";
 import { getLocale } from "@/i18n/getLocale";
 import { getDictionary } from "@/i18n/dictionaries";
+import { Avatar } from "@/components/Avatar";
 import { LocaleSwitcher } from "@/components/LocaleSwitcher";
 
 export async function Navbar() {
   const [session, locale] = await Promise.all([auth(), getLocale()]);
   const t = getDictionary(locale).nav;
+
+  const profile = session?.user?.id
+    ? await prisma.user.findUnique({
+        where: { id: session.user.id },
+        select: {
+          username: true,
+          avatarUrl: true,
+          _count: {
+            select: { receivedFriendRequests: { where: { status: "PENDING" } } },
+          },
+        },
+      })
+    : null;
+
+  const pendingRequests = profile?._count.receivedFriendRequests ?? 0;
 
   return (
     <header className="border-b border-black/10 dark:border-white/10">
@@ -25,7 +42,26 @@ export async function Navbar() {
               <Link href="/library" className="hover:underline">
                 {t.library}
               </Link>
-              <Link href="/profile" className="hover:underline">
+              <Link href="/users" className="hover:underline">
+                {t.people}
+              </Link>
+              <Link href="/friends" className="inline-flex items-center gap-1 hover:underline">
+                {t.friends}
+                {pendingRequests > 0 && (
+                  <span className="rounded-full bg-foreground px-1.5 text-xs font-medium text-background">
+                    {pendingRequests}
+                  </span>
+                )}
+              </Link>
+              <Link
+                href="/profile"
+                className="inline-flex items-center gap-1.5 hover:underline"
+              >
+                <Avatar
+                  src={profile?.avatarUrl}
+                  name={profile?.username ?? session.user.name ?? "?"}
+                  size={22}
+                />
                 {t.profile}
               </Link>
               <form

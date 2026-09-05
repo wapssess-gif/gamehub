@@ -31,7 +31,7 @@
   слой на tRPC) — не нужен отдельный сервер на старте.
 - **БД**: PostgreSQL + Prisma ORM.
 - **Auth**: NextAuth.js (email/password + Google/Steam OAuth "из коробки").
-- **Хранилище файлов**: Supabase Storage или Cloudflare R2 (S3-совместимо).
+- **Хранилище файлов**: Vercel Blob (аватары); Supabase Storage / Cloudflare R2 — вариант для скриншотов.
 - **Хостинг**: Vercel (frontend+API) + Supabase/Neon (Postgres) — есть
   бесплатные тарифы, подходит для pet-проекта.
 
@@ -99,8 +99,10 @@ NextAuth)**. Он даёт быстрый путь от документации
 - **БД**: PostgreSQL + Prisma ORM.
 - **Auth**: NextAuth.js (email/password на старте, OAuth Google/Steam — этап 2).
 - **Внешнее игровое API**: RAWG (см. ниже).
-- **Хранилище файлов**: Supabase Storage или Cloudflare R2 — понадобится
-  начиная с этапа 3 (скриншоты) / этапа 2 (аватары), не нужно для MVP.
+- **Хранилище файлов**: Vercel Blob — для аватаров профиля (F3). Скриншоты
+  (этап 3) при необходимости можно вынести в Supabase Storage / R2, но
+  Vercel Blob подойдёт и для них. Токен `BLOB_READ_WRITE_TOKEN`; без него
+  загрузка аватара просто отключается, остальное работает.
 - **Хостинг**: Vercel (app) + Neon/Supabase (Postgres).
 
 ## Внешнее игровое API — выбор между IGDB и RAWG

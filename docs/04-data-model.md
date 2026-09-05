@@ -6,10 +6,26 @@
 **Статус (2026-09-04):** `User`, `Game`, `UserGame` реализованы в
 [prisma/schema.prisma](../prisma/schema.prisma) как часть MVP —
 без изменений полей относительно черновика ниже (имена в camelCase
-по конвенции Prisma/TS вместо snake_case). `Review`, `Screenshot`,
-`Collection`/`CollectionGame`, `Achievement`/`UserAchievement`,
-`Friendship`, `ActivityEvent` пока не реализованы — они появятся
-на Этапах 2–3 (см. [06-roadmap.md](06-roadmap.md)).
+по конвенции Prisma/TS вместо snake_case).
+
+**Обновление (этап 2):** реализованы `Friendship` (запрос/принятие,
+статусы `PENDING`/`ACCEPTED`/`DECLINED`, одна строка на пару) и новая
+сущность `Follow` (односторонняя подписка). В `User` добавлено поле
+`privacy` (`PUBLIC`/`PRIVATE`) — базовая версия F4. Поиск профилей по
+`username` регистронезависимый, хотя уникальность в БД регистрозависима
+(для pet-проекта приемлемо). `Review`, `Screenshot`, `Collection`,
+`Achievement`, `ActivityEvent` пока не реализованы — Этапы 2–3.
+
+### Follow (односторонняя подписка)
+
+| Поле | Тип | Комментарий |
+|---|---|---|
+| id | UUID | PK |
+| follower_id | UUID | FK → User (кто подписался) |
+| following_id | UUID | FK → User (за кем следят) |
+| created_at | datetime | |
+
+Уникальность: (`follower_id`, `following_id`).
 
 ## Сущности
 
@@ -23,9 +39,9 @@
 | password_hash | string | null, если вход только через OAuth |
 | username | string, unique | публичный ник |
 | display_name | string | |
-| avatar_url | string | |
+| avatar_url | string | загружается в Vercel Blob |
 | bio | text | |
-| privacy | enum(public, friends, private) | F4 |
+| privacy | enum(public, private) | F4 — реализовано; `friends` как отдельный режим позже |
 | created_at | datetime | |
 
 ### Game (локальный кэш внешнего API)

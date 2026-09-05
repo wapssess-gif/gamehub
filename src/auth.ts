@@ -43,8 +43,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
     authorized({ auth: session, request: { nextUrl } }) {
-      const isProtected =
-        nextUrl.pathname.startsWith("/library") || nextUrl.pathname.startsWith("/profile");
+      const isProtected = ["/library", "/profile", "/friends", "/users", "/u/"].some(
+        (prefix) => nextUrl.pathname.startsWith(prefix),
+      );
       if (!isProtected) return true;
       if (session?.user) return true;
       return Response.redirect(new URL("/login", nextUrl));
