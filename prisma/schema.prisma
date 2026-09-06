@@ -42,6 +42,7 @@ enum ActivityType {
 
 model User {
   id           String         @id @default(uuid())
+  publicId     Int            @unique @default(autoincrement())
   email        String         @unique
   passwordHash String?
   username     String         @unique

@@ -11,6 +11,7 @@ import { getDictionary } from "@/i18n/dictionaries";
 
 const USER_FIELDS = {
   id: true,
+  publicId: true,
   username: true,
   displayName: true,
   avatarUrl: true,
@@ -18,6 +19,7 @@ const USER_FIELDS = {
 
 type ListedUser = {
   id: string;
+  publicId: number;
   username: string;
   displayName: string | null;
   avatarUrl: string | null;

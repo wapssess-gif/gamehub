@@ -133,6 +133,9 @@ export type Dictionary = {
     searchPlaceholder: string;
     searchSubmit: string;
     searchHint: string;
+    searchByHandle: string;
+    searchByName: string;
+    searchById: string;
     noUsersFound: string;
     follow: string;
     unfollow: string;
@@ -393,9 +396,12 @@ const ru: Dictionary = {
   },
   social: {
     searchTitle: "Поиск пользователей",
-    searchPlaceholder: "Введите ник (@username)…",
+    searchPlaceholder: "Введите запрос…",
     searchSubmit: "Найти",
-    searchHint: "Введите минимум 2 символа ника.",
+    searchHint: "Введите запрос: минимум 2 символа для ника или имени, число для ID.",
+    searchByHandle: "по @нику",
+    searchByName: "по имени",
+    searchById: "по ID",
     noUsersFound: "Пользователи не найдены.",
     follow: "Подписаться",
     unfollow: "Отписаться",
@@ -697,9 +703,12 @@ const en: Dictionary = {
   },
   social: {
     searchTitle: "Find people",
-    searchPlaceholder: "Enter a username (@username)…",
+    searchPlaceholder: "Enter a query…",
     searchSubmit: "Search",
-    searchHint: "Type at least 2 characters of a username.",
+    searchHint: "Enter a query: at least 2 characters for a handle or name, a number for an ID.",
+    searchByHandle: "by @handle",
+    searchByName: "by name",
+    searchById: "by ID",
     noUsersFound: "No users found.",
     follow: "Follow",
     unfollow: "Unfollow",

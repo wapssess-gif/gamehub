@@ -7,7 +7,12 @@ export function UserCard({
   user,
   children,
 }: {
-  user: { username: string; displayName: string | null; avatarUrl: string | null };
+  user: {
+    username: string;
+    displayName: string | null;
+    avatarUrl: string | null;
+    publicId?: number;
+  };
   children?: ReactNode;
 }) {
   return (
@@ -19,7 +24,12 @@ export function UserCard({
         <Avatar src={user.avatarUrl} name={user.username} size={40} />
         <div className="min-w-0">
           <p className="truncate font-medium">{user.displayName || user.username}</p>
-          <p className="truncate text-xs text-black/60 dark:text-white/60">@{user.username}</p>
+          <p className="truncate text-xs text-black/60 dark:text-white/60">
+            @{user.username}
+            {user.publicId != null && (
+              <span className="text-black/40 dark:text-white/40"> · ID {user.publicId}</span>
+            )}
+          </p>
         </div>
       </Link>
       {children && <div className="flex shrink-0 flex-wrap items-center gap-2">{children}</div>}

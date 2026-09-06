@@ -15,9 +15,14 @@ import { getUserAchievements, type AchievementState } from "@/lib/achievements";
 import { getLocale } from "@/i18n/getLocale";
 import { getDictionary } from "@/i18n/dictionaries";
 
-function findByUsername(username: string) {
+/** Resolves a profile by @username (case-insensitive) or by numeric public id. */
+function findByUsername(param: string) {
+  const asId = Number.parseInt(param, 10);
+  if (Number.isInteger(asId) && asId > 0 && String(asId) === param) {
+    return prisma.user.findUnique({ where: { publicId: asId } });
+  }
   return prisma.user.findFirst({
-    where: { username: { equals: username, mode: "insensitive" } },
+    where: { username: { equals: param.replace(/^@+/, ""), mode: "insensitive" } },
   });
 }
 
@@ -96,7 +101,10 @@ export default async function PublicProfilePage({
           <Avatar src={user.avatarUrl} name={user.username} size={72} />
           <div>
             <h1 className="text-2xl font-semibold">{user.displayName || user.username}</h1>
-            <p className="text-sm text-black/60 dark:text-white/60">@{user.username}</p>
+            <p className="text-sm text-black/60 dark:text-white/60">
+              @{user.username}
+              <span className="text-black/40 dark:text-white/40"> · ID {user.publicId}</span>
+            </p>
             {user.privacy === "PRIVATE" && (
               <span className="mt-1 inline-block rounded-full border border-black/15 px-2 py-0.5 text-xs text-black/60 dark:border-white/15 dark:text-white/60">
                 {s.privateBadge}
