@@ -45,6 +45,9 @@ export async function Navbar() {
               <Link href="/collections" className="hover:underline">
                 {getDictionary(locale).collections.title}
               </Link>
+              <Link href="/feed" className="hover:underline">
+                {t.feed}
+              </Link>
               <Link href="/users" className="hover:underline">
                 {t.people}
               </Link>

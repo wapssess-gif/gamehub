@@ -5,6 +5,7 @@ export type Dictionary = {
   nav: {
     catalog: string;
     library: string;
+    feed: string;
     people: string;
     friends: string;
     profile: string;
@@ -156,6 +157,14 @@ export type Dictionary = {
     outgoingRequests: string;
     emptyLibrary: string;
   };
+  activity: {
+    title: string;
+    empty: string;
+    addedGame: string;
+    startedPlaying: string;
+    completed: string;
+    rated: string;
+  };
   games: {
     title: string;
     searchPlaceholder: string;
@@ -223,6 +232,7 @@ const ru: Dictionary = {
   nav: {
     catalog: "Каталог",
     library: "Библиотека",
+    feed: "Лента",
     people: "Люди",
     friends: "Друзья",
     profile: "Профиль",
@@ -382,6 +392,14 @@ const ru: Dictionary = {
     outgoingRequests: "Исходящие запросы",
     emptyLibrary: "Библиотека пуста.",
   },
+  activity: {
+    title: "Лента активности",
+    empty: "Пока пусто. Подпишитесь на кого-нибудь или добавьте друзей — их активность появится здесь.",
+    addedGame: "добавил(а) в библиотеку",
+    startedPlaying: "начал(а) играть в",
+    completed: "прошёл(а)",
+    rated: "оценил(а) на {rating}/10",
+  },
   games: {
     title: "Каталог игр",
     searchPlaceholder: "Поиск по названию...",
@@ -449,6 +467,7 @@ const en: Dictionary = {
   nav: {
     catalog: "Catalog",
     library: "Library",
+    feed: "Feed",
     people: "People",
     friends: "Friends",
     profile: "Profile",
@@ -607,6 +626,14 @@ const en: Dictionary = {
     incomingRequests: "Incoming requests",
     outgoingRequests: "Outgoing requests",
     emptyLibrary: "Library is empty.",
+  },
+  activity: {
+    title: "Activity feed",
+    empty: "Nothing here yet. Follow someone or add friends — their activity will show up here.",
+    addedGame: "added to library",
+    startedPlaying: "started playing",
+    completed: "completed",
+    rated: "rated {rating}/10",
   },
   games: {
     title: "Game catalog",

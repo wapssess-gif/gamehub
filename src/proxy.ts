@@ -5,7 +5,9 @@ export const config = {
     "/library/:path*",
     "/profile/:path*",
     "/friends/:path*",
+    "/feed/:path*",
     "/users/:path*",
     "/u/:path*",
+    "/collections/:path*",
   ],
 };

@@ -31,6 +31,13 @@ enum FriendshipStatus {
   DECLINED
 }
 
+enum ActivityType {
+  ADDED_GAME
+  STARTED_PLAYING
+  COMPLETED
+  RATED
+}
+
 model User {
   id           String         @id @default(uuid())
   email        String         @unique
@@ -42,8 +49,9 @@ model User {
   privacy      ProfilePrivacy @default(PUBLIC)
   createdAt    DateTime       @default(now())
 
-  library      UserGame[]
-  collections  Collection[]
+  library       UserGame[]
+  collections   Collection[]
+  activityEvents ActivityEvent[]
 
   following              Follow[]     @relation("follower")
   followers              Follow[]     @relation("following")
@@ -51,6 +59,23 @@ model User {
   receivedFriendRequests Friendship[] @relation("addressee")
 
   @@map("users")
+}
+
+// Событие для ленты активности друзей/подписок (F14). Данные об игре
+// денормализованы в payload, чтобы лента читалась без джойнов и переживала
+// удаление кэшированной записи Game.
+model ActivityEvent {
+  id        String       @id @default(uuid())
+  userId    String
+  type      ActivityType
+  payload   Json
+  createdAt DateTime     @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([createdAt])
+  @@map("activity_events")
 }
 
 // Пользовательские коллекции игр (плейлисты, подборки)
