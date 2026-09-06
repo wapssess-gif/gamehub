@@ -190,6 +190,7 @@ export type Dictionary = {
     notInLibrary: string;
     addToLibrary: string;
     loginToAdd: string;
+    screenshots: string;
     notes: string;
     notesPlaceholder: string;
     saveNotes: string;
@@ -415,6 +416,7 @@ const ru: Dictionary = {
     notInLibrary: "Этой игры нет в вашей библиотеке",
     addToLibrary: "Добавить в библиотеку",
     loginToAdd: "Войдите, чтобы добавить в библиотеку",
+    screenshots: "Скриншоты",
     notes: "Личные заметки",
     notesPlaceholder: "Напишите свои впечатления, мысли или заметки об игре...",
     saveNotes: "Сохранить заметки",
@@ -640,6 +642,7 @@ const en: Dictionary = {
     notInLibrary: "This game is not in your library",
     addToLibrary: "Add to library",
     loginToAdd: "Log in to add to your library",
+    screenshots: "Screenshots",
     notes: "Personal notes",
     notesPlaceholder: "Write your impressions, thoughts or notes about the game...",
     saveNotes: "Save notes",

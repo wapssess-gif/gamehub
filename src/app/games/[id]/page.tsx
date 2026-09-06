@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
-import { getRawgGame, type RawgGame } from "@/lib/rawg";
+import { getRawgGame, getRawgGameScreenshots, type RawgGame } from "@/lib/rawg";
 import { getLocale } from "@/i18n/getLocale";
 import { getDictionary } from "@/i18n/dictionaries";
 import { GameLibraryCard, type UserGameDetailView } from "@/components/GameLibraryCard";
@@ -65,12 +65,13 @@ export default async function GameDetailPage({
 
   const externalId = dbGame?.externalId ?? id;
 
-  let rawgGame: RawgGame | null = null;
-  try {
-    rawgGame = await getRawgGame(externalId);
-  } catch (error) {
-    console.warn(`Could not load RAWG details for externalId=${externalId}:`, error);
-  }
+  const [rawgGame, rawgScreenshots] = await Promise.all([
+    getRawgGame(externalId).catch((error) => {
+      console.warn(`Could not load RAWG details for externalId=${externalId}:`, error);
+      return null as RawgGame | null;
+    }),
+    getRawgGameScreenshots(externalId),
+  ]);
 
   if (!dbGame && !rawgGame) {
     notFound();
@@ -91,6 +92,16 @@ export default async function GameDetailPage({
   const website = rawgGame?.website ?? null;
   const esrbRating = rawgGame?.esrb_rating?.name ?? null;
   const summary = rawgGame?.description_raw ?? dbGame?.summary ?? null;
+
+  // Screenshots endpoint first; fall back to the images on the game object.
+  const screenshots: string[] = [
+    ...rawgScreenshots.map((s) => s.image),
+    rawgGame?.background_image_additional ?? null,
+    rawgGame?.background_image ?? null,
+  ]
+    .filter((url): url is string => Boolean(url))
+    .filter((url, i, arr) => arr.indexOf(url) === i)
+    .slice(0, 6);
 
   const userGameRow = dbGame?.library && dbGame.library.length > 0 ? dbGame.library[0] : null;
 
@@ -276,20 +287,27 @@ export default async function GameDetailPage({
             <p className="text-sm text-black/50 dark:text-white/50">{t.unknown}</p>
           )}
 
-          {/* Additional Screenshot */}
-          {rawgGame?.background_image_additional && (
+          {/* Screenshots */}
+          {screenshots.length > 0 && (
             <div className="mt-4 flex flex-col gap-2">
               <h3 className="text-sm font-medium text-black/60 dark:text-white/60">
-                Скриншот
+                {t.screenshots}
               </h3>
-              <div className="overflow-hidden rounded-xl border border-black/10 dark:border-white/10">
-                <Image
-                  src={rawgGame.background_image_additional}
-                  alt={`${title} screenshot`}
-                  width={720}
-                  height={400}
-                  className="h-auto w-full object-cover"
-                />
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {screenshots.map((src, i) => (
+                  <div
+                    key={src}
+                    className="overflow-hidden rounded-xl border border-black/10 dark:border-white/10"
+                  >
+                    <Image
+                      src={src}
+                      alt={`${title} — ${t.screenshots} ${i + 1}`}
+                      width={720}
+                      height={400}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           )}

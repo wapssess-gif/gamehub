@@ -24,6 +24,14 @@ export type RawgGame = {
 
 export type RawgTaxonomy = { id: number; name: string; slug: string };
 
+export type RawgScreenshot = {
+  id: number;
+  image: string;
+  width?: number;
+  height?: number;
+  is_deleted?: boolean;
+};
+
 function apiKey(): string {
   const key = process.env.RAWG_API_KEY;
   if (!key) throw new Error("RAWG_API_KEY не задан в переменных окружения");
@@ -68,6 +76,20 @@ export async function searchRawgGames(opts: {
 
 export async function getRawgGame(externalId: string): Promise<RawgGame> {
   return rawgFetch<RawgGame>(`/games/${externalId}`, {}, 3600);
+}
+
+/** Screenshots for a game, newest RAWG upload first. Empty array on failure. */
+export async function getRawgGameScreenshots(externalId: string): Promise<RawgScreenshot[]> {
+  try {
+    const data = await rawgFetch<{ results: RawgScreenshot[] }>(
+      `/games/${externalId}/screenshots`,
+      {},
+      3600,
+    );
+    return data.results.filter((s) => !s.is_deleted && s.image);
+  } catch {
+    return [];
+  }
 }
 
 export async function listRawgGenres(): Promise<RawgTaxonomy[]> {
