@@ -47,7 +47,7 @@ export default async function CollectionsPage() {
               href={`/collections/${collection.id}`}
               className="group rounded-lg border border-black/10 bg-black/[0.02] p-4 transition-all hover:border-red-900 hover:bg-black/[0.05] dark:border-white/10 dark:bg-white/[0.02] dark:hover:border-red-900 dark:hover:bg-white/[0.05]"
             >
-              <h3 className="font-semibold text-black dark:text-white group-hover:text-red-500">
+              <h3 className="font-semibold text-black dark:text-white hover:text-red-500">
                 {collection.name}
               </h3>
               {collection.description && (
