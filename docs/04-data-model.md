@@ -15,9 +15,9 @@
 `username` регистронезависимый, хотя уникальность в БД регистрозависима
 (для pet-проекта приемлемо).
 
-**Обновление (2026-09-06):** реализованы `Collection` и `CollectionItem`
-(F10) — см. раздел ниже. `Review`, `Screenshot`, `Achievement`,
-`ActivityEvent` пока не реализованы — Этапы 2–3.
+**Обновление (2026-09-06):** реализованы `Collection` / `CollectionItem`
+(F10) и `ActivityEvent` (F14) — см. разделы ниже. `Review`, `Screenshot`,
+`Achievement` пока не реализованы — Этапы 2–3.
 
 ### Follow (односторонняя подписка)
 
@@ -148,18 +148,20 @@ title, description, icon_url, source (enum: external, internal).
 повторная заявка после отказа переиспользует строку (см.
 `src/lib/actions/social.ts`). Блокировки пользователей нет.
 
-### ActivityEvent (лента активности — денормализованная для скорости чтения)
+### ActivityEvent (лента активности — денормализованная) — F14, реализовано
 
 | Поле | Тип | Комментарий |
 |---|---|---|
 | id | UUID | PK |
-| user_id | UUID | кто совершил действие |
-| type | enum(added_game, status_changed, rated, reviewed, achievement_unlocked) | |
-| payload | jsonb | контекст события (game_id, старый/новый статус и т.д.) |
-| created_at | datetime | |
+| userId | UUID | FK → User, кто совершил действие |
+| type | enum(ADDED_GAME, STARTED_PLAYING, COMPLETED, RATED) | `REVIEWED` / `ACHIEVEMENT_UNLOCKED` — позже |
+| payload | Json | `{ id, externalId, title, coverUrl, rating? }` — данные об игре денормализованы целиком |
+| createdAt | datetime | |
 
-Генерируется как побочный эффект действий (F6–F8, F11, F15), читается
-для ленты друзей (F14).
+Индексы: `(userId, createdAt)`, `(createdAt)`. Генерируется best-effort из
+`src/lib/actions/library.ts` (F6–F8); лента читается `getFeed()` в
+`src/lib/activity.ts`. Игра в payload хранится целиком, чтобы лента
+читалась без джойнов и переживала удаление кэша `Game`.
 
 ## ER-диаграмма (упрощённо)
 
@@ -172,7 +174,7 @@ erDiagram
     USER ||--o{ COLLECTION : "создаёт *"
     USER ||--o{ FRIENDSHIP : "участвует *"
     USER ||--o{ FOLLOW : "подписки *"
-    USER ||--o{ ACTIVITY_EVENT : "генерирует"
+    USER ||--o{ ACTIVITY_EVENT : "генерирует *"
     USER ||--o{ USER_ACHIEVEMENT : "получает"
 
     GAME ||--o{ USER_GAME : "добавлена в *"
