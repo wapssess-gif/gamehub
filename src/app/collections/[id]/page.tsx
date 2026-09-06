@@ -46,7 +46,7 @@ export default async function CollectionPage({
               {collection.description}
             </p>
           )}
-          <p className="mt-2 text-sm text-black/50 dark:text-white/50">
+          <p className="mt-2 text-sm text-black/70 dark:text-white/50">
             {collection.items.length}{" "}
             {locale === "ru"
               ? "игр"
@@ -73,7 +73,7 @@ export default async function CollectionPage({
 
       {collection.items.length === 0 ? (
         <div className="rounded-lg border border-black/10 bg-black/[0.02] p-8 text-center dark:border-white/10 dark:bg-white/[0.02]">
-          <p className="text-black/60 dark:text-white/60 mb-4">
+          <p className="text-black/70 dark:text-white/60 mb-4">
             {t.collections.noGames}
           </p>
           <Link
@@ -102,7 +102,7 @@ export default async function CollectionPage({
                 <h3 className="font-semibold group-hover:text-red-500">
                   {item.game.title}
                 </h3>
-                <p className="text-xs text-black/50 dark:text-white/50 mt-1">
+                <p className="text-xs text-black/70 dark:text-white/50 mt-1">
                   {item.game.releaseDate?.getFullYear() || t.games.unknownDate}
                 </p>
               </div>

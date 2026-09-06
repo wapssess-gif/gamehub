@@ -31,7 +31,7 @@ export default async function ProfilePage() {
         <Avatar src={user.avatarUrl} name={user.username} size={64} />
         <div>
           <h1 className="text-2xl font-semibold">{user.displayName || user.username}</h1>
-          <p className="text-sm text-black/60 dark:text-white/60">@{user.username}</p>
+          <p className="text-sm text-black/70 dark:text-white/60">@{user.username}</p>
         </div>
       </section>
 

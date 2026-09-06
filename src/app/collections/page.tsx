@@ -29,7 +29,7 @@ export default async function CollectionsPage() {
 
       {collections.length === 0 ? (
         <div className="rounded-lg border border-black/10 bg-black/[0.02] p-8 text-center dark:border-white/10 dark:bg-white/[0.02]">
-          <p className="text-black/60 dark:text-white/60 mb-4">
+          <p className="text-black/70 dark:text-white/60 mb-4">
             {t.collections.empty}
           </p>
           <Link
@@ -51,11 +51,11 @@ export default async function CollectionsPage() {
                 {collection.name}
               </h3>
               {collection.description && (
-                <p className="mt-1 text-sm text-black/60 dark:text-white/60 line-clamp-2">
+                <p className="mt-1 text-sm text-black/70 dark:text-white/60 line-clamp-2">
                   {collection.description}
                 </p>
               )}
-              <p className="mt-2 text-xs text-black/50 dark:text-white/50">
+              <p className="mt-2 text-xs text-black/70 dark:text-white/50">
                 {collection._count.items}{" "}
                 {locale === "ru" ? "игр" : collection._count.items === 1 ? "game" : "games"}
               </p>
