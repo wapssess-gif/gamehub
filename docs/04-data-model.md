@@ -13,8 +13,11 @@
 сущность `Follow` (односторонняя подписка). В `User` добавлено поле
 `privacy` (`PUBLIC`/`PRIVATE`) — базовая версия F4. Поиск профилей по
 `username` регистронезависимый, хотя уникальность в БД регистрозависима
-(для pet-проекта приемлемо). `Review`, `Screenshot`, `Collection`,
-`Achievement`, `ActivityEvent` пока не реализованы — Этапы 2–3.
+(для pet-проекта приемлемо).
+
+**Обновление (2026-09-06):** реализованы `Collection` и `CollectionItem`
+(F10) — см. раздел ниже. `Review`, `Screenshot`, `Achievement`,
+`ActivityEvent` пока не реализованы — Этапы 2–3.
 
 ### Follow (односторонняя подписка)
 
@@ -104,10 +107,23 @@
 | file_url | string | путь в файловом хранилище |
 | created_at | datetime | |
 
-### Collection / CollectionGame (коллекции игр)
+### Collection / CollectionItem (коллекции игр) — F10, реализовано
 
-**Collection**: id, user_id (FK), title, description, is_public, created_at.
-**CollectionGame**: collection_id (FK), game_id (FK), sort_order — связь many-to-many.
+**Collection**: id, `userId` (FK → User), `name`, `description` (nullable),
+`isPublic` (default true), `createdAt`, `updatedAt`.
+Уникальность: (`userId`, `name`) — у пользователя не может быть двух
+коллекций с одинаковым именем.
+
+**CollectionItem**: id, `collectionId` (FK → Collection), `gameId` (FK → Game),
+`addedAt`. Уникальность: (`collectionId`, `gameId`).
+
+Отличия от исходного черновика: поле называется `name`, а не `title`;
+связующая таблица — `CollectionItem` без `sort_order` (порядок пока по
+времени добавления); в коллекцию можно добавить только игру, уже
+находящуюся в библиотеке пользователя (нельзя добавить произвольную
+игру из RAWG напрямую — чтобы не плодить «осиротевшие» записи `Game`).
+`isPublic` в схеме есть, но публичного просмотра чужих коллекций пока
+нет — все коллекции видит только владелец.
 
 ### Achievement / UserAchievement
 
@@ -152,9 +168,9 @@ erDiagram
     GAME ||--o{ USER_GAME : "добавлена в"
     GAME ||--o{ REVIEW : "получает"
     GAME ||--o{ ACHIEVEMENT : "имеет"
-    GAME ||--o{ COLLECTION_GAME : "входит в"
+    GAME ||--o{ COLLECTION_ITEM : "входит в"
 
-    COLLECTION ||--o{ COLLECTION_GAME : "содержит"
+    COLLECTION ||--o{ COLLECTION_ITEM : "содержит"
     REVIEW ||--o{ SCREENSHOT : "иллюстрируется"
     ACHIEVEMENT ||--o{ USER_ACHIEVEMENT : "разблокируется"
 ```
