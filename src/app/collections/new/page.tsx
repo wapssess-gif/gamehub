@@ -62,9 +62,9 @@ export default function NewCollectionPage() {
             placeholder={locale === "ru" ? "например, Любимые RPG" : "e.g., Favorite RPGs"}
             maxLength={100}
             disabled={isPending}
-            className="w-full rounded-md border border-black/10 bg-white text-black placeholder:text-black/50 px-3 py-2 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-white/50 disabled:opacity-50"
+            className="w-full rounded-md border border-white/10 bg-white/5 text-white placeholder:text-white/40 px-3 py-2 disabled:opacity-50"
           />
-          <p className="mt-1 text-xs text-black/50 dark:text-white/50">
+          <p className="mt-1 text-xs text-white/50">
             {name.length}/100
           </p>
         </div>
@@ -84,15 +84,15 @@ export default function NewCollectionPage() {
             maxLength={500}
             rows={4}
             disabled={isPending}
-            className="w-full rounded-md border border-black/10 bg-white text-black placeholder:text-black/50 px-3 py-2 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-white/50 disabled:opacity-50"
+            className="w-full rounded-md border border-white/10 bg-white/5 text-white placeholder:text-white/40 px-3 py-2 disabled:opacity-50"
           />
-          <p className="mt-1 text-xs text-black/50 dark:text-white/50">
+          <p className="mt-1 text-xs text-white/50">
             {description.length}/500
           </p>
         </div>
 
         {error && (
-          <div className="rounded-md border border-red-500/50 bg-red-500/10 p-3 text-sm text-red-600 dark:text-red-400">
+          <div className="rounded-md border border-red-500/50 bg-red-500/10 p-3 text-sm text-red-400">
             {error}
           </div>
         )}
@@ -101,7 +101,7 @@ export default function NewCollectionPage() {
           <button
             type="submit"
             disabled={isPending || !name.trim()}
-            className="rounded-md bg-white dark:bg-red-900 text-black dark:text-white px-4 py-2 font-medium transition-all hover:bg-red-900 hover:text-white dark:hover:bg-red-950 active:bg-red-950 disabled:opacity-60"
+            className="rounded-md bg-white text-black px-4 py-2 font-medium transition-all hover:bg-red-900 hover:text-white active:bg-red-950 disabled:opacity-60"
           >
             {isPending ? t.collections.creating : t.collections.create}
           </button>
@@ -109,7 +109,7 @@ export default function NewCollectionPage() {
             type="button"
             onClick={() => router.back()}
             disabled={isPending}
-            className="rounded-md border border-black/20 text-black dark:text-white dark:border-white/20 px-4 py-2 font-medium transition-all hover:bg-black/10 active:bg-black/20 disabled:opacity-60 dark:hover:bg-white/10 dark:active:bg-white/20"
+            className="rounded-md border border-white/20 text-white px-4 py-2 font-medium transition-all hover:bg-white/10 active:bg-white/20 disabled:opacity-60"
           >
             {t.profile.cancel}
           </button>

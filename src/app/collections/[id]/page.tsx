@@ -42,11 +42,11 @@ export default async function CollectionPage({
         <div>
           <h1 className="text-3xl font-bold">{collection.name}</h1>
           {collection.description && (
-            <p className="mt-2 text-black/70 dark:text-white/70">
+            <p className="mt-2 text-white/70">
               {collection.description}
             </p>
           )}
-          <p className="mt-2 text-sm text-black/70 dark:text-white/50">
+          <p className="mt-2 text-sm text-white/50">
             {collection.items.length}{" "}
             {locale === "ru"
               ? "игр"
@@ -63,7 +63,7 @@ export default async function CollectionPage({
             )}
             <Link
               href={`/collections/${id}/edit`}
-              className="rounded-md bg-white dark:bg-red-900 text-black dark:text-white px-4 py-2 font-medium transition-all hover:bg-red-900 hover:text-white dark:hover:bg-red-950 active:bg-red-950"
+              className="rounded-md bg-white text-black px-4 py-2 font-medium transition-all hover:bg-red-900 hover:text-white active:bg-red-950"
             >
               {t.collections.edit}
             </Link>
@@ -72,13 +72,13 @@ export default async function CollectionPage({
       </div>
 
       {collection.items.length === 0 ? (
-        <div className="rounded-lg border border-black/10 bg-black/[0.02] p-8 text-center dark:border-white/10 dark:bg-white/[0.02]">
-          <p className="text-black/70 dark:text-white/60 mb-4">
+        <div className="rounded-lg border border-white/10 bg-white/[0.02] p-8 text-center">
+          <p className="text-white/60 mb-4">
             {t.collections.noGames}
           </p>
           <Link
             href="/games"
-            className="inline-block rounded-md bg-white dark:bg-red-900 text-black dark:text-white px-4 py-2 text-sm font-medium transition-all hover:bg-red-900 hover:text-white dark:hover:bg-red-950 active:bg-red-950"
+            className="inline-block rounded-md bg-white text-black px-4 py-2 text-sm font-medium transition-all hover:bg-red-900 hover:text-white active:bg-red-950"
           >
             {t.collections.browseGames}
           </Link>
@@ -89,7 +89,7 @@ export default async function CollectionPage({
             <Link
               key={item.id}
               href={`/games/${item.game.id}`}
-              className="group overflow-hidden rounded-lg border border-black/10 bg-black/[0.02] transition-all hover:border-red-900 hover:bg-black/[0.05] dark:border-white/10 dark:bg-white/[0.02] dark:hover:border-red-900 dark:hover:bg-white/[0.05]"
+              className="group overflow-hidden rounded-lg border border-white/10 bg-white/[0.02] transition-all hover:border-red-900 hover:bg-white/[0.05]"
             >
               {item.game.coverUrl && (
                 <img
@@ -99,10 +99,10 @@ export default async function CollectionPage({
                 />
               )}
               <div className="p-3">
-                <h3 className="font-semibold group-hover:text-red-500">
+                <h3 className="font-semibold text-white group-hover:text-red-400">
                   {item.game.title}
                 </h3>
-                <p className="text-xs text-black/70 dark:text-white/50 mt-1">
+                <p className="text-xs text-white/50 mt-1">
                   {item.game.releaseDate?.getFullYear() || t.games.unknownDate}
                 </p>
               </div>

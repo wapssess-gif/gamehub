@@ -53,16 +53,16 @@ export function AddToCollectionButton({
       <button
         onClick={() => setIsOpen(!isOpen)}
         disabled={isPending}
-        className="text-sm text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white transition-colors disabled:opacity-50"
+        className="text-sm text-white/60 hover:text-white transition-colors disabled:opacity-50"
       >
         {locale === "ru" ? "Добавить в коллекцию" : "Add to collection"}
       </button>
 
       {isOpen && (
-        <div className="absolute top-full mt-2 right-0 bg-white dark:bg-black border border-black/10 dark:border-white/10 rounded-md shadow-lg z-10 min-w-48">
+        <div className="absolute top-full mt-2 right-0 bg-[#141414] border border-white/10 rounded-md shadow-lg z-10 min-w-48">
           <div className="p-2">
             {error && (
-              <div className="text-xs text-red-600 dark:text-red-400 mb-2 px-2 py-1">
+              <div className="text-xs text-red-400 mb-2 px-2 py-1">
                 {error}
               </div>
             )}
@@ -71,7 +71,7 @@ export function AddToCollectionButton({
                 key={collection.id}
                 onClick={() => handleAddToCollection(collection.id)}
                 disabled={isPending}
-                className="w-full text-left px-3 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5 rounded transition-colors disabled:opacity-50"
+                className="w-full text-left px-3 py-2 text-sm text-white hover:bg-white/5 rounded transition-colors disabled:opacity-50"
               >
                 {collection.name}
               </button>

@@ -31,12 +31,12 @@ export function PrivacyToggle({
         value={current}
         onChange={(e) => change(e.target.value as ProfilePrivacy)}
         disabled={isPending}
-        className="w-fit rounded-md border border-black/20 bg-white text-black px-3 py-2 text-sm outline-none focus:border-red-900 focus:bg-red-50 transition-all duration-200 disabled:opacity-50 dark:border-white/30 dark:bg-black dark:text-white dark:focus:bg-red-900"
+        className="w-fit rounded-md border border-white/30 bg-[#141414] text-white px-3 py-2 text-sm outline-none focus:border-red-900 transition-all duration-200 disabled:opacity-50"
       >
         <option value="PUBLIC">{t.privacyPublic}</option>
         <option value="PRIVATE">{t.privacyPrivate}</option>
       </select>
-      <p className="text-xs text-black/70 dark:text-white/50">
+      <p className="text-xs text-white/50">
         {current === "PUBLIC" ? t.privacyPublicHint : t.privacyPrivateHint}
       </p>
     </div>

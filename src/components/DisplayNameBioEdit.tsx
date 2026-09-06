@@ -29,24 +29,24 @@ export function DisplayNameBioEdit({
     return (
       <section className="flex flex-col gap-3">
         <div>
-          <h2 className="text-sm font-semibold text-black/80 dark:text-white/60">
+          <h2 className="text-sm font-semibold text-white/60">
             {t.displayNameHeading}
           </h2>
-          <p className="text-lg text-black dark:text-white">{displayName || "—"}</p>
+          <p className="text-lg text-white">{displayName || "—"}</p>
         </div>
         {bio && (
           <div>
-            <h2 className="text-sm font-semibold text-black/80 dark:text-white/60">
+            <h2 className="text-sm font-semibold text-white/60">
               {t.bioHeading}
             </h2>
-            <p className="text-sm text-black dark:text-white whitespace-pre-line">
+            <p className="text-sm text-white whitespace-pre-line">
               {bio}
             </p>
           </div>
         )}
         <button
           onClick={() => setIsEditing(true)}
-          className="mt-2 rounded-md bg-white dark:bg-red-900 px-4 py-2 text-sm font-medium text-black dark:text-white transition-all hover:bg-red-900 hover:text-white dark:hover:bg-red-950 active:bg-red-950 disabled:opacity-60"
+          className="mt-2 w-fit rounded-md bg-white px-4 py-2 text-sm font-medium text-black transition-all hover:bg-red-900 hover:text-white active:bg-red-950 disabled:opacity-60"
         >
           Edit Profile
         </button>
@@ -55,10 +55,10 @@ export function DisplayNameBioEdit({
   }
 
   return (
-    <section className="flex flex-col gap-4 rounded-lg border border-black/10 bg-black/[0.02] p-4 dark:border-white/10 dark:bg-white/[0.02]">
+    <section className="flex flex-col gap-4 rounded-lg border border-white/10 bg-white/[0.02] p-4">
       <div>
         <label className="block text-sm font-medium">{t.displayNameLabel}</label>
-        <p className="mb-2 text-xs text-black/80 dark:text-white/60">
+        <p className="mb-2 text-xs text-white/60">
           {t.displayNameHint}
         </p>
         <input
@@ -66,17 +66,17 @@ export function DisplayNameBioEdit({
           value={displayName}
           onChange={(e) => setDisplayName(e.target.value.slice(0, 50))}
           maxLength={50}
-          className="w-full rounded-md border border-black/10 bg-white text-black px-3 py-2 text-sm dark:border-white/10 dark:bg-white/5 dark:text-white"
+          className="w-full rounded-md border border-white/10 bg-white/5 text-white px-3 py-2 text-sm"
           disabled={isPending}
         />
-        <p className="mt-1 text-xs text-black/70 dark:text-white/50">
+        <p className="mt-1 text-xs text-white/50">
           {displayName.length}/50
         </p>
       </div>
 
       <div>
         <label className="block text-sm font-medium">{t.bioLabel}</label>
-        <p className="mb-2 text-xs text-black/80 dark:text-white/60">
+        <p className="mb-2 text-xs text-white/60">
           {t.bioHint}
         </p>
         <textarea
@@ -84,11 +84,11 @@ export function DisplayNameBioEdit({
           onChange={(e) => setBio(e.target.value.slice(0, 300))}
           maxLength={300}
           placeholder={t.bioPlaceholder}
-          className="w-full rounded-md border border-black/10 bg-white text-black px-3 py-2 text-sm dark:border-white/10 dark:bg-white/5 dark:text-white"
+          className="w-full rounded-md border border-white/10 bg-white/5 text-white placeholder:text-white/40 px-3 py-2 text-sm"
           rows={4}
           disabled={isPending}
         />
-        <p className="mt-1 text-xs text-black/70 dark:text-white/50">
+        <p className="mt-1 text-xs text-white/50">
           {bio.length}/300
         </p>
       </div>
@@ -97,7 +97,7 @@ export function DisplayNameBioEdit({
         <button
           onClick={handleSave}
           disabled={isPending}
-          className="rounded-md bg-white dark:bg-red-900 text-black dark:text-white px-4 py-2 text-sm font-medium transition-all hover:bg-red-900 hover:text-white dark:hover:bg-red-950 active:bg-red-950 disabled:opacity-60"
+          className="rounded-md bg-white text-black px-4 py-2 text-sm font-medium transition-all hover:bg-red-900 hover:text-white active:bg-red-950 disabled:opacity-60"
         >
           {isPending ? t.saving : t.save}
         </button>
@@ -108,7 +108,7 @@ export function DisplayNameBioEdit({
             setIsEditing(false);
           }}
           disabled={isPending}
-          className="rounded-md border border-black/20 text-black dark:text-white dark:border-white/20 px-4 py-2 text-sm font-medium transition-all hover:bg-black/10 active:bg-black/20 disabled:opacity-60 dark:hover:bg-white/10 dark:active:bg-white/20"
+          className="rounded-md border border-white/20 text-white px-4 py-2 text-sm font-medium transition-all hover:bg-white/10 active:bg-white/20 disabled:opacity-60"
         >
           {t.cancel}
         </button>

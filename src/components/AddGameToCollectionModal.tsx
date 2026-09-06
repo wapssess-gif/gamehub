@@ -43,29 +43,29 @@ export function AddGameToCollectionModal({
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-black border border-black/10 dark:border-white/10 rounded-lg max-w-2xl w-full max-h-96 overflow-y-auto">
-        <div className="p-6 border-b border-black/10 dark:border-white/10">
-          <h2 className="text-xl font-semibold text-black dark:text-white">
+      <div className="bg-[#141414] border border-white/10 rounded-lg max-w-2xl w-full max-h-96 overflow-y-auto">
+        <div className="p-6 border-b border-white/10">
+          <h2 className="text-xl font-semibold text-white">
             {locale === "ru" ? "Добавить игры в коллекцию" : "Add games to collection"}
           </h2>
         </div>
 
         {error && (
-          <div className="mx-6 mt-6 rounded-md border border-red-500/50 bg-red-500/10 p-3 text-sm text-red-600 dark:text-red-400">
+          <div className="mx-6 mt-6 rounded-md border border-red-500/50 bg-red-500/10 p-3 text-sm text-red-400">
             {error}
           </div>
         )}
 
         <div className="p-6 space-y-2">
           {userGames.length === 0 ? (
-            <p className="text-black/60 dark:text-white/60">
+            <p className="text-white/60">
               {locale === "ru" ? "В вашей библиотеке нет игр" : "You have no games in your library"}
             </p>
           ) : (
             userGames.map((ug) => (
               <label
                 key={ug.id}
-                className="flex items-center gap-3 p-2 rounded hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer text-black dark:text-white"
+                className="flex items-center gap-3 p-2 rounded hover:bg-white/5 cursor-pointer text-white"
               >
                 <input
                   type="checkbox"
@@ -88,18 +88,18 @@ export function AddGameToCollectionModal({
           )}
         </div>
 
-        <div className="p-6 border-t border-black/10 dark:border-white/10 flex gap-3">
+        <div className="p-6 border-t border-white/10 flex gap-3">
           <button
             onClick={handleAdd}
             disabled={isPending || selectedGames.size === 0}
-            className="rounded-md bg-white dark:bg-red-900 text-black dark:text-white px-4 py-2 font-medium transition-all hover:bg-red-900 hover:text-white dark:hover:bg-red-950 active:bg-red-950 disabled:opacity-60"
+            className="rounded-md bg-white text-black px-4 py-2 font-medium transition-all hover:bg-red-900 hover:text-white active:bg-red-950 disabled:opacity-60"
           >
             {isPending ? "..." : locale === "ru" ? "Добавить" : "Add"}
           </button>
           <button
             onClick={onClose}
             disabled={isPending}
-            className="rounded-md border border-black/20 text-black dark:text-white dark:border-white/20 px-4 py-2 font-medium transition-all hover:bg-black/10 active:bg-black/20 disabled:opacity-60 dark:hover:bg-white/10 dark:active:bg-white/20"
+            className="rounded-md border border-white/20 text-white px-4 py-2 font-medium transition-all hover:bg-white/10 active:bg-white/20 disabled:opacity-60"
           >
             {t.profile.cancel}
           </button>

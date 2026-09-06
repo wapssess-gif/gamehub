@@ -19,7 +19,7 @@ export function AddGameToCollectionButton({
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="rounded-md bg-white dark:bg-red-900 text-black dark:text-white px-4 py-2 font-medium transition-all hover:bg-red-900 hover:text-white dark:hover:bg-red-950 active:bg-red-950"
+        className="rounded-md bg-white text-black px-4 py-2 font-medium transition-all hover:bg-red-900 hover:text-white active:bg-red-950"
       >
         + Добавить игры
       </button>

@@ -28,8 +28,8 @@ export default async function CollectionsPage() {
       </div>
 
       {collections.length === 0 ? (
-        <div className="rounded-lg border border-black/10 bg-black/[0.02] p-8 text-center dark:border-white/10 dark:bg-white/[0.02]">
-          <p className="text-black/70 dark:text-white/60 mb-4">
+        <div className="rounded-lg border border-white/10 bg-white/[0.02] p-8 text-center">
+          <p className="text-white/60 mb-4">
             {t.collections.empty}
           </p>
           <Link
@@ -45,17 +45,17 @@ export default async function CollectionsPage() {
             <Link
               key={collection.id}
               href={`/collections/${collection.id}`}
-              className="group rounded-lg border border-black/10 bg-black/[0.02] p-4 transition-all hover:border-red-900 hover:bg-black/[0.05] dark:border-white/10 dark:bg-white/[0.02] dark:hover:border-red-900 dark:hover:bg-white/[0.05]"
+              className="group rounded-lg border border-white/10 bg-white/[0.02] p-4 transition-all hover:border-red-900 hover:bg-white/[0.05]"
             >
-              <h3 className="font-semibold text-black dark:text-white hover:text-red-500">
+              <h3 className="font-semibold text-white group-hover:text-red-400">
                 {collection.name}
               </h3>
               {collection.description && (
-                <p className="mt-1 text-sm text-black/70 dark:text-white/60 line-clamp-2">
+                <p className="mt-1 text-sm text-white/60 line-clamp-2">
                   {collection.description}
                 </p>
               )}
-              <p className="mt-2 text-xs text-black/70 dark:text-white/50">
+              <p className="mt-2 text-xs text-white/50">
                 {collection._count.items}{" "}
                 {locale === "ru" ? "игр" : collection._count.items === 1 ? "game" : "games"}
               </p>
