@@ -10,6 +10,8 @@ import { StatsSummary } from "@/components/StatsSummary";
 import { ReadOnlyLibrary, type ReadOnlyEntry } from "@/components/ReadOnlyLibrary";
 import { FollowButton } from "@/components/FollowButton";
 import { FriendButton } from "@/components/FriendButton";
+import { AchievementBadges } from "@/components/AchievementBadges";
+import { getUserAchievements, type AchievementState } from "@/lib/achievements";
 import { getLocale } from "@/i18n/getLocale";
 import { getDictionary } from "@/i18n/dictionaries";
 
@@ -43,7 +45,8 @@ export default async function PublicProfilePage({
   if (!session?.user?.id) redirect("/login");
   const meId = session.user.id;
 
-  const t = getDictionary(await getLocale());
+  const locale = await getLocale();
+  const t = getDictionary(locale);
   const s = t.social;
 
   const user = await findByUsername(username);
@@ -58,15 +61,18 @@ export default async function PublicProfilePage({
 
   let entries: ReadOnlyEntry[] = [];
   let stats: UserStats | null = null;
+  let achievements: AchievementState[] = [];
   if (canSee) {
-    const [rows, computed] = await Promise.all([
+    const [rows, computed, earned] = await Promise.all([
       prisma.userGame.findMany({
         where: { userId: user.id },
         include: { game: true },
         orderBy: { updatedAt: "desc" },
       }),
       getUserStats(user.id),
+      getUserAchievements(user.id),
     ]);
+    achievements = earned;
     entries = rows.map((e) => ({
       id: e.id,
       status: e.status,
@@ -135,6 +141,12 @@ export default async function PublicProfilePage({
             <h2 className="mb-2 text-lg font-medium">{t.profile.statsHeading}</h2>
             <StatsSummary stats={stats} t={t} />
           </section>
+          <AchievementBadges
+            achievements={achievements}
+            showLocked={false}
+            locale={locale}
+            t={t.achievements}
+          />
           <section>
             <h2 className="mb-3 text-lg font-medium">{t.nav.library}</h2>
             <ReadOnlyLibrary entries={entries} t={t} />

@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { requireUserId } from "@/lib/session";
 import { recordActivity } from "@/lib/activity";
+import { checkAndUnlockAchievements } from "@/lib/achievements";
 import { getLocale } from "@/i18n/getLocale";
 import { getDictionary } from "@/i18n/dictionaries";
 
@@ -39,9 +40,12 @@ export async function upsertReview(gameId: string, rating: number, body: string)
     await recordActivity(userId, "REVIEWED", game, { rating: r });
   }
 
+  await checkAndUnlockAchievements(userId);
+
   revalidatePath(`/games/${game.id}`);
   revalidatePath(`/games/${game.externalId}`);
   revalidatePath("/feed");
+  revalidatePath("/profile");
 }
 
 export async function deleteReview(gameId: string) {

@@ -9,6 +9,8 @@ import { AvatarUpload } from "@/components/AvatarUpload";
 import { PrivacyToggle } from "@/components/PrivacyToggle";
 import { StatsSummary } from "@/components/StatsSummary";
 import { DisplayNameBioEdit } from "@/components/DisplayNameBioEdit";
+import { AchievementBadges } from "@/components/AchievementBadges";
+import { getUserAchievements } from "@/lib/achievements";
 import { getLocale } from "@/i18n/getLocale";
 import { getDictionary } from "@/i18n/dictionaries";
 
@@ -17,12 +19,14 @@ export default async function ProfilePage() {
   if (!session?.user) redirect("/login");
   const userId = session.user.id;
 
-  const t = getDictionary(await getLocale());
+  const locale = await getLocale();
+  const t = getDictionary(locale);
 
-  const [user, stats, counts] = await Promise.all([
+  const [user, stats, counts, achievements] = await Promise.all([
     prisma.user.findUniqueOrThrow({ where: { id: userId } }),
     getUserStats(userId),
     getConnectionCounts(userId),
+    getUserAchievements(userId),
   ]);
 
   return (
@@ -70,6 +74,13 @@ export default async function ProfilePage() {
         <h2 className="mb-2 text-lg font-medium">{t.profile.statsHeading}</h2>
         <StatsSummary stats={stats} t={t} />
       </section>
+
+      <AchievementBadges
+        achievements={achievements}
+        showLocked
+        locale={locale}
+        t={t.achievements}
+      />
     </div>
   );
 }

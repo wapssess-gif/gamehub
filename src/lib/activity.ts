@@ -26,8 +26,9 @@ export type FeedItem = {
   type: ActivityType;
   createdAt: string;
   actor: FeedActor;
-  game: ActivityGame;
+  game: ActivityGame | null;
   rating: number | null;
+  achievementId: string | null;
 };
 
 /**
@@ -92,10 +93,27 @@ export async function getFeed(viewerId: string, limit = 30): Promise<FeedItem[]>
     take: limit,
   });
 
-  return events.flatMap((e) => {
+  return events.flatMap((e): FeedItem[] => {
     const actor = visibleActors.get(e.userId);
-    const p = e.payload as unknown as ActivityPayload | null;
-    if (!actor || !p?.id || !p.title) return [];
+    if (!actor) return [];
+    const p = e.payload as unknown as (ActivityPayload & { achievementId?: string }) | null;
+
+    if (e.type === "ACHIEVEMENT_UNLOCKED") {
+      if (!p?.achievementId) return [];
+      return [
+        {
+          id: e.id,
+          type: e.type,
+          createdAt: e.createdAt.toISOString(),
+          actor,
+          game: null,
+          rating: null,
+          achievementId: p.achievementId,
+        },
+      ];
+    }
+
+    if (!p?.id || !p.title) return [];
     return [
       {
         id: e.id,
@@ -104,6 +122,7 @@ export async function getFeed(viewerId: string, limit = 30): Promise<FeedItem[]>
         actor,
         game: { id: p.id, externalId: p.externalId, title: p.title, coverUrl: p.coverUrl ?? null },
         rating: typeof p.rating === "number" ? p.rating : null,
+        achievementId: null,
       },
     ];
   });

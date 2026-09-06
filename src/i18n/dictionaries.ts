@@ -185,6 +185,26 @@ export type Dictionary = {
     errorBadRating: string;
     errorGameNotFound: string;
   };
+  achievements: {
+    heading: string;
+    unlockedOn: string;
+    locked: string;
+    empty: string;
+    activityVerb: string;
+    items: Record<
+      | "first_game"
+      | "ten_games"
+      | "fifty_games"
+      | "first_completed"
+      | "ten_completed"
+      | "hundred_hours"
+      | "first_rating"
+      | "first_review"
+      | "five_reviews"
+      | "genre_explorer",
+      { name: string; description: string }
+    >;
+  };
   games: {
     title: string;
     searchPlaceholder: string;
@@ -440,6 +460,25 @@ const ru: Dictionary = {
     errorBadRating: "Оценка должна быть от 1 до 10",
     errorGameNotFound: "Игра не найдена",
   },
+  achievements: {
+    heading: "Достижения",
+    unlockedOn: "получено",
+    locked: "не получено",
+    empty: "Пока нет достижений.",
+    activityVerb: "получил(а) достижение",
+    items: {
+      first_game: { name: "Первая игра", description: "Добавь первую игру в библиотеку" },
+      ten_games: { name: "Коллекционер", description: "10 игр в библиотеке" },
+      fifty_games: { name: "Архивариус", description: "50 игр в библиотеке" },
+      first_completed: { name: "Пройдено!", description: "Пройди первую игру" },
+      ten_completed: { name: "Марафонец", description: "Пройди 10 игр" },
+      hundred_hours: { name: "Сотка", description: "Залогируй 100 часов" },
+      first_rating: { name: "Судья", description: "Поставь оценку первой игре" },
+      first_review: { name: "Критик", description: "Напиши первый отзыв" },
+      five_reviews: { name: "Обозреватель", description: "Напиши 5 отзывов" },
+      genre_explorer: { name: "Всеядный", description: "Игры в 5 разных жанрах" },
+    },
+  },
   games: {
     title: "Каталог игр",
     searchPlaceholder: "Поиск по названию...",
@@ -694,6 +733,25 @@ const en: Dictionary = {
     errorEmptyBody: "Review text cannot be empty",
     errorBadRating: "Rating must be between 1 and 10",
     errorGameNotFound: "Game not found",
+  },
+  achievements: {
+    heading: "Achievements",
+    unlockedOn: "unlocked",
+    locked: "locked",
+    empty: "No achievements yet.",
+    activityVerb: "unlocked the achievement",
+    items: {
+      first_game: { name: "First Game", description: "Add your first game to the library" },
+      ten_games: { name: "Collector", description: "10 games in your library" },
+      fifty_games: { name: "Archivist", description: "50 games in your library" },
+      first_completed: { name: "Completed!", description: "Complete your first game" },
+      ten_completed: { name: "Marathoner", description: "Complete 10 games" },
+      hundred_hours: { name: "The Ton", description: "Log 100 hours" },
+      first_rating: { name: "Judge", description: "Rate your first game" },
+      first_review: { name: "Critic", description: "Write your first review" },
+      five_reviews: { name: "Reviewer", description: "Write 5 reviews" },
+      genre_explorer: { name: "Omnivore", description: "Games across 5 different genres" },
+    },
   },
   games: {
     title: "Game catalog",

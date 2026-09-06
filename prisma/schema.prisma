@@ -37,6 +37,7 @@ enum ActivityType {
   COMPLETED
   RATED
   REVIEWED
+  ACHIEVEMENT_UNLOCKED
 }
 
 model User {
@@ -54,6 +55,7 @@ model User {
   collections   Collection[]
   activityEvents ActivityEvent[]
   reviews       Review[]
+  achievements  UserAchievement[]
 
   following              Follow[]     @relation("follower")
   followers              Follow[]     @relation("following")
@@ -181,6 +183,20 @@ model Review {
   @@unique([userId, gameId])
   @@index([gameId, createdAt])
   @@map("reviews")
+}
+
+// Внутренние достижения GameHub (F12). Каталог достижений живёт в коде
+// (src/lib/achievements.ts) — здесь только факт получения.
+model UserAchievement {
+  id            String   @id @default(uuid())
+  userId        String
+  achievementId String
+  unlockedAt    DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, achievementId])
+  @@map("user_achievements")
 }
 
 // Запись библиотеки пользователя — ядро продукта (статус, прогресс, оценка).

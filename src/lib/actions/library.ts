@@ -6,6 +6,7 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { getRawgGame } from "@/lib/rawg";
 import { recordActivity, type ActivityGame } from "@/lib/activity";
+import { checkAndUnlockAchievements } from "@/lib/achievements";
 import { getLocale } from "@/i18n/getLocale";
 import { getDictionary } from "@/i18n/dictionaries";
 
@@ -62,9 +63,12 @@ export async function addGameToLibrary(externalId: string) {
     });
   }
 
+  await checkAndUnlockAchievements(userId);
+
   revalidatePath("/library");
   revalidatePath("/games");
   revalidatePath("/feed");
+  revalidatePath("/profile");
   revalidatePath(`/games/${externalId}`);
   revalidatePath(`/games/${game.id}`);
 }
@@ -102,9 +106,12 @@ export async function updateLibraryEntry(entryId: string, data: LibraryUpdate) {
     await recordActivity(userId, "RATED", before.game as ActivityGame, { rating: data.rating });
   }
 
+  await checkAndUnlockAchievements(userId);
+
   revalidatePath("/library");
   revalidatePath("/games");
   revalidatePath("/feed");
+  revalidatePath("/profile");
   revalidatePath(`/games/${updated.gameId}`);
   revalidatePath(`/games/${updated.game.externalId}`);
 }
@@ -139,9 +146,12 @@ export async function changeLibraryStatus(entryId: string, status: GameStatus) {
     }
   }
 
+  await checkAndUnlockAchievements(userId);
+
   revalidatePath("/library");
   revalidatePath("/games");
   revalidatePath("/feed");
+  revalidatePath("/profile");
   revalidatePath(`/games/${updated.gameId}`);
   revalidatePath(`/games/${updated.game.externalId}`);
 }
