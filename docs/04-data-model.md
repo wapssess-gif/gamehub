@@ -16,8 +16,9 @@
 (для pet-проекта приемлемо).
 
 **Обновление (2026-09-06):** реализованы `Collection` / `CollectionItem`
-(F10) и `ActivityEvent` (F14) — см. разделы ниже. `Review`, `Screenshot`,
-`Achievement` пока не реализованы — Этапы 2–3.
+(F10), `ActivityEvent` (F14), `Review` (F15), `UserAchievement` (F12) —
+см. разделы ниже. `Screenshot` и достижения из внешнего API (F11) пока
+не реализованы — Этапы 2–3.
 
 ### Follow (односторонняя подписка)
 
@@ -86,17 +87,21 @@
 Реализовано в MVP; поля `started_at` / `finished_at` / `notes` тоже
 подключены к UI (карточка игры).
 
-### Review (развёрнутый отзыв, отдельно от быстрой оценки в UserGame)
+### Review (развёрнутый отзыв, отдельно от быстрой оценки в UserGame) — F15, реализовано
 
 | Поле | Тип | Комментарий |
 |---|---|---|
 | id | UUID | PK |
-| user_id | UUID | FK → User |
-| game_id | UUID | FK → Game |
-| rating | int 1–10 | может дублировать/переопределять UserGame.rating |
-| body | text | |
-| is_hidden | boolean | задел под модерацию |
-| created_at | datetime | |
+| userId | UUID | FK → User |
+| gameId | UUID | FK → Game |
+| rating | int 1–10 | обязательное; отдельно от `UserGame.rating` |
+| body | text | обязательное, до 5000 символов |
+| isHidden | boolean | задел под модерацию; скрытые не показываются, UI-переключателя нет |
+| createdAt / updatedAt | datetime | |
+
+Уникальность: (`userId`, `gameId`) — один отзыв на игру, редактируется.
+Первая публикация отзыва пишет событие `ACTIVITY_EVENT` типа `REVIEWED`
+(правки — нет). Экшены: `src/lib/actions/reviews.ts`.
 
 ### Screenshot
 
@@ -127,11 +132,22 @@
 `isPublic` в схеме есть, но публичного просмотра чужих коллекций пока
 нет — все коллекции видит только владелец.
 
-### Achievement / UserAchievement
+### UserAchievement (внутренние достижения GameHub) — F12, реализовано
 
-**Achievement**: id, game_id (FK, nullable для внутренних ачивок GameHub),
-title, description, icon_url, source (enum: external, internal).
-**UserAchievement**: user_id (FK), achievement_id (FK), unlocked_at.
+| Поле | Тип | Комментарий |
+|---|---|---|
+| id | UUID | PK |
+| userId | UUID | FK → User |
+| achievementId | string | id из каталога в коде (`src/lib/achievements.ts`) |
+| unlockedAt | datetime | |
+
+Уникальность: (`userId`, `achievementId`). Отдельной таблицы `Achievement`
+нет — каталог из 10 бейджей и условия живут в коде; здесь хранится только
+факт получения. Проверка (`checkAndUnlockAchievements`) пересчитывает
+статистику пользователя после действий с библиотекой/отзывами и открывает
+новые бейджи; каждый пишет событие `ACTIVITY_EVENT` типа
+`ACHIEVEMENT_UNLOCKED`. Достижения из внешнего API (F11) — отдельная
+история, ещё не реализованы.
 
 ### Friendship (граф друзей) — реализовано
 
@@ -154,8 +170,8 @@ title, description, icon_url, source (enum: external, internal).
 |---|---|---|
 | id | UUID | PK |
 | userId | UUID | FK → User, кто совершил действие |
-| type | enum(ADDED_GAME, STARTED_PLAYING, COMPLETED, RATED) | `REVIEWED` / `ACHIEVEMENT_UNLOCKED` — позже |
-| payload | Json | `{ id, externalId, title, coverUrl, rating? }` — данные об игре денормализованы целиком |
+| type | enum(ADDED_GAME, STARTED_PLAYING, COMPLETED, RATED, REVIEWED, ACHIEVEMENT_UNLOCKED) | |
+| payload | Json | игровые события: `{ id, externalId, title, coverUrl, rating? }`; `ACHIEVEMENT_UNLOCKED`: `{ achievementId }` |
 | createdAt | datetime | |
 
 Индексы: `(userId, createdAt)`, `(createdAt)`. Генерируется best-effort из
@@ -170,22 +186,23 @@ title, description, icon_url, source (enum: external, internal).
 ```mermaid
 erDiagram
     USER ||--o{ USER_GAME : "владеет *"
-    USER ||--o{ REVIEW : "пишет"
+    USER ||--o{ REVIEW : "пишет *"
     USER ||--o{ COLLECTION : "создаёт *"
     USER ||--o{ FRIENDSHIP : "участвует *"
     USER ||--o{ FOLLOW : "подписки *"
     USER ||--o{ ACTIVITY_EVENT : "генерирует *"
-    USER ||--o{ USER_ACHIEVEMENT : "получает"
+    USER ||--o{ USER_ACHIEVEMENT : "получает *"
 
     GAME ||--o{ USER_GAME : "добавлена в *"
-    GAME ||--o{ REVIEW : "получает"
-    GAME ||--o{ ACHIEVEMENT : "имеет"
+    GAME ||--o{ REVIEW : "получает *"
     GAME ||--o{ COLLECTION_ITEM : "входит в *"
 
     COLLECTION ||--o{ COLLECTION_ITEM : "содержит *"
     REVIEW ||--o{ SCREENSHOT : "иллюстрируется"
-    ACHIEVEMENT ||--o{ USER_ACHIEVEMENT : "разблокируется"
 ```
+
+`USER_ACHIEVEMENT` держит только `achievementId`-строку (каталог в коде,
+отдельной таблицы `Achievement` нет). `SCREENSHOT` пока не реализован.
 
 ## Заметки по проектированию
 
