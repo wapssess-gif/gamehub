@@ -36,6 +36,7 @@ enum ActivityType {
   STARTED_PLAYING
   COMPLETED
   RATED
+  REVIEWED
 }
 
 model User {
@@ -52,6 +53,7 @@ model User {
   library       UserGame[]
   collections   Collection[]
   activityEvents ActivityEvent[]
+  reviews       Review[]
 
   following              Follow[]     @relation("follower")
   followers              Follow[]     @relation("following")
@@ -155,9 +157,30 @@ model Game {
 
   library        UserGame[]
   collectionItems CollectionItem[]
+  reviews        Review[]
 
   @@unique([externalSource, externalId])
   @@map("games")
+}
+
+// Развёрнутый отзыв на игру (F15): текст + оценка 1–10, один на пару
+// пользователь+игра. isHidden — задел под модерацию, скрытые не показываются.
+model Review {
+  id        String   @id @default(uuid())
+  userId    String
+  gameId    String
+  rating    Int
+  body      String
+  isHidden  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  game Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, gameId])
+  @@index([gameId, createdAt])
+  @@map("reviews")
 }
 
 // Запись библиотеки пользователя — ядро продукта (статус, прогресс, оценка).

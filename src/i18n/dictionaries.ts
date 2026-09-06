@@ -164,6 +164,26 @@ export type Dictionary = {
     startedPlaying: string;
     completed: string;
     rated: string;
+    reviewed: string;
+  };
+  reviews: {
+    heading: string;
+    none: string;
+    writeHeading: string;
+    ratingLabel: string;
+    bodyLabel: string;
+    bodyPlaceholder: string;
+    submit: string;
+    update: string;
+    delete: string;
+    saving: string;
+    deleteConfirm: string;
+    edited: string;
+    loginToReview: string;
+    addToDbHint: string;
+    errorEmptyBody: string;
+    errorBadRating: string;
+    errorGameNotFound: string;
   };
   games: {
     title: string;
@@ -399,6 +419,26 @@ const ru: Dictionary = {
     startedPlaying: "начал(а) играть в",
     completed: "прошёл(а)",
     rated: "оценил(а) на {rating}/10",
+    reviewed: "написал(а) отзыв на",
+  },
+  reviews: {
+    heading: "Отзывы",
+    none: "Пока нет отзывов.",
+    writeHeading: "Ваш отзыв",
+    ratingLabel: "Оценка (1–10)",
+    bodyLabel: "Текст",
+    bodyPlaceholder: "Что вы думаете об этой игре?",
+    submit: "Опубликовать",
+    update: "Обновить",
+    delete: "Удалить",
+    saving: "Сохраняю…",
+    deleteConfirm: "Удалить ваш отзыв?",
+    edited: "изменён",
+    loginToReview: "Войдите, чтобы оставить отзыв.",
+    addToDbHint: "Отзыв можно оставить после того, как игра попадёт в базу (её добавят в библиотеку).",
+    errorEmptyBody: "Текст отзыва не может быть пустым",
+    errorBadRating: "Оценка должна быть от 1 до 10",
+    errorGameNotFound: "Игра не найдена",
   },
   games: {
     title: "Каталог игр",
@@ -634,6 +674,26 @@ const en: Dictionary = {
     startedPlaying: "started playing",
     completed: "completed",
     rated: "rated {rating}/10",
+    reviewed: "reviewed",
+  },
+  reviews: {
+    heading: "Reviews",
+    none: "No reviews yet.",
+    writeHeading: "Your review",
+    ratingLabel: "Rating (1–10)",
+    bodyLabel: "Text",
+    bodyPlaceholder: "What do you think of this game?",
+    submit: "Publish",
+    update: "Update",
+    delete: "Delete",
+    saving: "Saving…",
+    deleteConfirm: "Delete your review?",
+    edited: "edited",
+    loginToReview: "Log in to write a review.",
+    addToDbHint: "You can review this game once it's in the database (added to someone's library).",
+    errorEmptyBody: "Review text cannot be empty",
+    errorBadRating: "Rating must be between 1 and 10",
+    errorGameNotFound: "Game not found",
   },
   games: {
     title: "Game catalog",

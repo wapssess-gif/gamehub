@@ -9,7 +9,9 @@ import { getLocale } from "@/i18n/getLocale";
 import { getDictionary } from "@/i18n/dictionaries";
 import { GameLibraryCard, type UserGameDetailView } from "@/components/GameLibraryCard";
 import { AddToCollectionButton } from "@/components/AddToCollectionButton";
+import { GameReviews } from "@/components/GameReviews";
 import { getUserCollections } from "@/lib/actions/collections";
+import { getGameReviews } from "@/lib/reviews";
 
 export async function generateMetadata({
   params,
@@ -122,6 +124,26 @@ export default async function GameDetailPage({
   const userCollections = session?.user?.id
     ? await getUserCollections(session.user.id)
     : [];
+
+  const allReviews = dbGame ? await getGameReviews(dbGame.id) : [];
+  const myReviewRow =
+    session?.user?.id && dbGame
+      ? await prisma.review.findUnique({
+          where: { userId_gameId: { userId: session.user.id, gameId: dbGame.id } },
+          select: { rating: true, body: true, createdAt: true, updatedAt: true },
+        })
+      : null;
+  const myReview = myReviewRow
+    ? {
+        rating: myReviewRow.rating,
+        body: myReviewRow.body,
+        createdAt: myReviewRow.createdAt.toISOString(),
+        updatedAt: myReviewRow.updatedAt.toISOString(),
+      }
+    : null;
+  const otherReviews = session?.user?.id
+    ? allReviews.filter((r) => r.authorId !== session.user!.id)
+    : allReviews;
 
   function getMetacriticColor(score: number) {
     if (score >= 75) return "bg-green-600 text-white";
@@ -381,6 +403,16 @@ export default async function GameDetailPage({
           </div>
         </aside>
       </div>
+
+      <GameReviews
+        gameId={dbGame?.id ?? ""}
+        otherReviews={otherReviews}
+        myReview={myReview}
+        isLoggedIn={Boolean(session?.user)}
+        gameInDb={Boolean(dbGame)}
+        locale={locale}
+        t={dict.reviews}
+      />
     </div>
   );
 }

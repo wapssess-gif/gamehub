@@ -24,6 +24,7 @@ export default async function FeedPage() {
       STARTED_PLAYING: a.startedPlaying,
       COMPLETED: a.completed,
       RATED: a.rated.replace("{rating}", String(item.rating ?? "")),
+      REVIEWED: a.reviewed,
     };
     return map[item.type];
   }
