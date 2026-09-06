@@ -32,14 +32,14 @@ export function DisplayNameBioEdit({
           <h2 className="text-sm font-semibold text-black/80 dark:text-white/60">
             {t.displayNameHeading}
           </h2>
-          <p className="text-lg">{displayName || "—"}</p>
+          <p className="text-lg text-black dark:text-white">{displayName || "—"}</p>
         </div>
         {bio && (
           <div>
             <h2 className="text-sm font-semibold text-black/80 dark:text-white/60">
               {t.bioHeading}
             </h2>
-            <p className="text-sm text-black/80 dark:text-white/80 whitespace-pre-line">
+            <p className="text-sm text-black dark:text-white whitespace-pre-line">
               {bio}
             </p>
           </div>
