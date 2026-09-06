@@ -82,7 +82,7 @@
 | started_at | date | nullable; авто-ставится при переводе в статус «играю» |
 | finished_at | date | nullable; авто-ставится при переводе в «пройдено» |
 | notes | text | приватная заметка пользователя; редактируется на `/games/[id]` |
-| updated_at | datetime | задел под ленту активности (F14 не реализована) |
+| updated_at | datetime | сортировка библиотеки; отдельная таблица `ActivityEvent` (F14) ведёт ленту |
 
 Уникальность: (`user_id`, `game_id`) — одна запись библиотеки на игру.
 Реализовано в MVP; поля `started_at` / `finished_at` / `notes` тоже
@@ -177,7 +177,8 @@
 | createdAt | datetime | |
 
 Индексы: `(userId, createdAt)`, `(createdAt)`. Генерируется best-effort из
-`src/lib/actions/library.ts` (F6–F8); лента читается `getFeed()` в
+экшенов библиотеки и отзывов (`recordActivity`) и из
+`checkAndUnlockAchievements`; лента читается `getFeed()` в
 `src/lib/activity.ts`. Игра в payload хранится целиком, чтобы лента
 читалась без джойнов и переживала удаление кэша `Game`.
 
