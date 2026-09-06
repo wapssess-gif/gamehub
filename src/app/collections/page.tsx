@@ -17,28 +17,26 @@ export default async function CollectionsPage() {
     <div className="flex flex-col gap-8">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">
-          {locale === "ru" ? "Мои коллекции" : "My Collections"}
+          {t.collections.myCollections}
         </h1>
         <Link
           href="/collections/new"
           className="rounded-md bg-white px-4 py-2 text-black font-medium transition-all hover:bg-red-900 hover:text-white active:bg-red-950"
         >
-          {locale === "ru" ? "Создать" : "Create"}
+          {t.collections.create}
         </Link>
       </div>
 
       {collections.length === 0 ? (
         <div className="rounded-lg border border-black/10 bg-black/[0.02] p-8 text-center dark:border-white/10 dark:bg-white/[0.02]">
           <p className="text-black/60 dark:text-white/60 mb-4">
-            {locale === "ru"
-              ? "У вас ещё нет коллекций"
-              : "You don't have any collections yet"}
+            {t.collections.empty}
           </p>
           <Link
             href="/collections/new"
             className="inline-block rounded-md bg-white px-4 py-2 text-sm font-medium text-black transition-all hover:bg-red-900 hover:text-white active:bg-red-950"
           >
-            {locale === "ru" ? "Создать первую" : "Create your first"}
+            {t.collections.createFirst}
           </Link>
         </div>
       ) : (

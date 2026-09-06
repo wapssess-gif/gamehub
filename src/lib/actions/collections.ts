@@ -71,7 +71,10 @@ export async function deleteCollection(id: string) {
   revalidatePath("/collections");
 }
 
-export async function addGameToCollection(collectionId: string, gameId: string) {
+export async function addGameToCollection(
+  collectionId: string,
+  gameId: string
+) {
   const userId = await requireUserId();
 
   // Verify collection ownership
@@ -81,6 +84,15 @@ export async function addGameToCollection(collectionId: string, gameId: string) 
 
   if (!collection || collection.userId !== userId) {
     throw new Error("Unauthorized");
+  }
+
+  // Verify game exists in our database
+  const game = await prisma.game.findUnique({
+    where: { id: gameId },
+  });
+
+  if (!game) {
+    throw new Error("Game not found");
   }
 
   // Check if game already in collection

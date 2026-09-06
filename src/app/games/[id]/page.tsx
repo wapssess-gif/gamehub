@@ -8,7 +8,9 @@ import { getRawgGame, type RawgGame } from "@/lib/rawg";
 import { getLocale } from "@/i18n/getLocale";
 import { getDictionary } from "@/i18n/dictionaries";
 import { GameLibraryCard, type UserGameDetailView } from "@/components/GameLibraryCard";
+import { AddToCollectionButton } from "@/components/AddToCollectionButton";
 import { translateText } from "@/lib/translate";
+import { getUserCollections } from "@/lib/actions/collections";
 
 export async function generateMetadata({
   params,
@@ -106,6 +108,10 @@ export default async function GameDetailPage({
         createdAt: userGameRow.createdAt.toISOString(),
       }
     : null;
+
+  const userCollections = session?.user?.id
+    ? await getUserCollections(session.user.id)
+    : [];
 
   function getMetacriticColor(score: number) {
     if (score >= 75) return "bg-green-600 text-white";
@@ -235,17 +241,27 @@ export default async function GameDetailPage({
 
       {/* User Library Management Card */}
       <section>
-        <GameLibraryCard
-          externalId={externalId}
-          userGame={userGame}
-          isLoggedIn={Boolean(session?.user)}
-          t={{
-            ...t,
-            status: dict.status,
-            removeConfirm: dict.library.removeConfirm.replace("{title}", title),
-            remove: dict.library.remove,
-          }}
-        />
+        <div className="flex flex-col gap-4">
+          <GameLibraryCard
+            externalId={externalId}
+            userGame={userGame}
+            isLoggedIn={Boolean(session?.user)}
+            t={{
+              ...t,
+              status: dict.status,
+              removeConfirm: dict.library.removeConfirm.replace("{title}", title),
+              remove: dict.library.remove,
+            }}
+          />
+          {session?.user && userCollections.length > 0 && dbGame && (
+            <div className="text-sm">
+              <AddToCollectionButton
+                gameId={dbGame.id}
+                collections={userCollections}
+              />
+            </div>
+          )}
+        </div>
       </section>
 
       {/* Main Content Grid: About + Information Sidebar */}

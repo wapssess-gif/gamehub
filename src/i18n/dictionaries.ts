@@ -202,6 +202,20 @@ export type Dictionary = {
     startedOn: string;
     finishedOn: string;
   };
+  collections: {
+    title: string;
+    myCollections: string;
+    create: string;
+    createFirst: string;
+    empty: string;
+    noGames: string;
+    browseGames: string;
+    backToCollections: string;
+    edit: string;
+    name: string;
+    description: string;
+    creating: string;
+  };
 };
 
 const ru: Dictionary = {
@@ -413,6 +427,20 @@ const ru: Dictionary = {
     startedOn: "Начато:",
     finishedOn: "Пройдено:",
   },
+  collections: {
+    title: "Коллекции",
+    myCollections: "Мои коллекции",
+    create: "Создать",
+    createFirst: "Создать первую",
+    empty: "У вас ещё нет коллекций",
+    noGames: "В коллекции нет игр",
+    browseGames: "Смотреть игры",
+    backToCollections: "← Вернуться к коллекциям",
+    edit: "Редактировать",
+    name: "Название",
+    description: "Описание",
+    creating: "Создаю...",
+  },
 };
 
 const en: Dictionary = {
@@ -623,6 +651,20 @@ const en: Dictionary = {
     addedOn: "Added to library:",
     startedOn: "Started:",
     finishedOn: "Completed:",
+  },
+  collections: {
+    title: "Collections",
+    myCollections: "My Collections",
+    create: "Create",
+    createFirst: "Create your first",
+    empty: "You don't have any collections yet",
+    noGames: "No games in this collection yet",
+    browseGames: "Browse games",
+    backToCollections: "← Back to collections",
+    edit: "Edit",
+    name: "Name",
+    description: "Description",
+    creating: "Creating...",
   },
 };
 
