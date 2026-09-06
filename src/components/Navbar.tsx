@@ -5,7 +5,6 @@ import { getLocale } from "@/i18n/getLocale";
 import { getDictionary } from "@/i18n/dictionaries";
 import { Avatar } from "@/components/Avatar";
 import { LocaleSwitcher } from "@/components/LocaleSwitcher";
-import { ThemeToggle } from "@/components/ThemeToggle";
 
 export async function Navbar() {
   const [session, locale] = await Promise.all([auth(), getLocale()]);
@@ -93,7 +92,6 @@ export async function Navbar() {
             </>
           )}
 
-          <ThemeToggle />
           <LocaleSwitcher locale={locale} />
         </div>
       </nav>
