@@ -39,7 +39,7 @@
 | Поле | Тип | Комментарий |
 |---|---|---|
 | id | UUID | PK |
-| publicId | int, unique, autoincrement | короткий ID для поиска и ссылок `/u/<число>` |
+| publicId | int, unique, autoincrement | короткий ID; в UI показывается с ведущими нулями до 10 знаков (`formatPublicId`), поиск и `/u/<число>` принимают и `42`, и `0000000042` |
 | email | string, unique | |
 | password_hash | string | null, если вход только через OAuth |
 | username | string, unique | публичный ник |
