@@ -11,6 +11,7 @@ import { StatsSummary } from "@/components/StatsSummary";
 import { DisplayNameBioEdit } from "@/components/DisplayNameBioEdit";
 import { AchievementBadges } from "@/components/AchievementBadges";
 import { getUserAchievements } from "@/lib/achievements";
+import { formatPublicId } from "@/lib/format";
 import { getLocale } from "@/i18n/getLocale";
 import { getDictionary } from "@/i18n/dictionaries";
 
@@ -37,7 +38,7 @@ export default async function ProfilePage() {
           <h1 className="text-2xl font-semibold">{user.displayName || user.username}</h1>
           <p className="text-sm text-black/70 dark:text-white/60">
             @{user.username}
-            <span className="text-black/45 dark:text-white/40"> · ID {user.publicId}</span>
+            <span className="text-black/45 dark:text-white/40"> · ID {formatPublicId(user.publicId)}</span>
           </p>
         </div>
       </section>

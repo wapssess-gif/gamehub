@@ -1,3 +1,17 @@
+export const PUBLIC_ID_LENGTH = 10;
+
+/** The stored integer id shown as a fixed-width, zero-padded string. */
+export function formatPublicId(publicId: number): string {
+  return String(publicId).padStart(PUBLIC_ID_LENGTH, "0");
+}
+
+/** Parses a user-typed public id ("42" or "0000000042") to its integer, or null. */
+export function parsePublicId(raw: string): number | null {
+  if (!/^\d+$/.test(raw.trim())) return null;
+  const n = Number.parseInt(raw, 10);
+  return Number.isInteger(n) && n > 0 ? n : null;
+}
+
 /** Locale-aware "5 minutes ago" / "5 минут назад" from an ISO timestamp. */
 export function relativeTime(iso: string, locale: string): string {
   const diffSec = Math.round((new Date(iso).getTime() - Date.now()) / 1000);

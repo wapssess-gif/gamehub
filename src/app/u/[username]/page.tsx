@@ -12,13 +12,14 @@ import { FollowButton } from "@/components/FollowButton";
 import { FriendButton } from "@/components/FriendButton";
 import { AchievementBadges } from "@/components/AchievementBadges";
 import { getUserAchievements, type AchievementState } from "@/lib/achievements";
+import { formatPublicId, parsePublicId } from "@/lib/format";
 import { getLocale } from "@/i18n/getLocale";
 import { getDictionary } from "@/i18n/dictionaries";
 
-/** Resolves a profile by @username (case-insensitive) or by numeric public id. */
+/** Resolves a profile by @username (case-insensitive) or by public id ("42" / "0000000042"). */
 function findByUsername(param: string) {
-  const asId = Number.parseInt(param, 10);
-  if (Number.isInteger(asId) && asId > 0 && String(asId) === param) {
+  const asId = parsePublicId(param);
+  if (asId !== null) {
     return prisma.user.findUnique({ where: { publicId: asId } });
   }
   return prisma.user.findFirst({
@@ -103,7 +104,7 @@ export default async function PublicProfilePage({
             <h1 className="text-2xl font-semibold">{user.displayName || user.username}</h1>
             <p className="text-sm text-black/60 dark:text-white/60">
               @{user.username}
-              <span className="text-black/40 dark:text-white/40"> · ID {user.publicId}</span>
+              <span className="text-black/40 dark:text-white/40"> · ID {formatPublicId(user.publicId)}</span>
             </p>
             {user.privacy === "PRIVATE" && (
               <span className="mt-1 inline-block rounded-full border border-black/15 px-2 py-0.5 text-xs text-black/60 dark:border-white/15 dark:text-white/60">

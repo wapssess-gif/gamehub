@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { Avatar } from "@/components/Avatar";
+import { formatPublicId } from "@/lib/format";
 
 /** Row with a user's avatar / name linking to their profile, plus an optional action slot. */
 export function UserCard({
@@ -27,7 +28,7 @@ export function UserCard({
           <p className="truncate text-xs text-black/60 dark:text-white/60">
             @{user.username}
             {user.publicId != null && (
-              <span className="text-black/40 dark:text-white/40"> · ID {user.publicId}</span>
+              <span className="text-black/40 dark:text-white/40"> · ID {formatPublicId(user.publicId)}</span>
             )}
           </p>
         </div>

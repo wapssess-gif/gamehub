@@ -3,6 +3,7 @@ import type { Prisma } from "@prisma/client";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { getRelationship } from "@/lib/social";
+import { parsePublicId } from "@/lib/format";
 import { UserCard } from "@/components/UserCard";
 import { FollowButton } from "@/components/FollowButton";
 import { FriendButton } from "@/components/FriendButton";
@@ -30,10 +31,8 @@ export default async function UsersSearchPage({
   let where: Prisma.UserWhereInput | null = null;
 
   if (mode === "id") {
-    const n = Number.parseInt(raw, 10);
-    if (Number.isInteger(n) && n > 0 && String(n) === raw) {
-      where = { publicId: n };
-    }
+    const n = parsePublicId(raw);
+    if (n !== null) where = { publicId: n };
   } else if (mode === "name") {
     if (raw.length >= 2) where = { displayName: { contains: raw, mode: "insensitive" } };
   } else {
