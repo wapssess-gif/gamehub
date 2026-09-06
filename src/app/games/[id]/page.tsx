@@ -9,7 +9,6 @@ import { getLocale } from "@/i18n/getLocale";
 import { getDictionary } from "@/i18n/dictionaries";
 import { GameLibraryCard, type UserGameDetailView } from "@/components/GameLibraryCard";
 import { AddToCollectionButton } from "@/components/AddToCollectionButton";
-import { translateText } from "@/lib/translate";
 import { getUserCollections } from "@/lib/actions/collections";
 
 export async function generateMetadata({
