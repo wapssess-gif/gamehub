@@ -1,5 +1,6 @@
 import type { GameStatus } from "@prisma/client";
 import type { Locale } from "@/i18n/locale";
+import type { AchievementId } from "@/lib/achievements";
 
 export type Dictionary = {
   nav: {
@@ -191,19 +192,7 @@ export type Dictionary = {
     locked: string;
     empty: string;
     activityVerb: string;
-    items: Record<
-      | "first_game"
-      | "ten_games"
-      | "fifty_games"
-      | "first_completed"
-      | "ten_completed"
-      | "hundred_hours"
-      | "first_rating"
-      | "first_review"
-      | "five_reviews"
-      | "genre_explorer",
-      { name: string; description: string }
-    >;
+    items: Record<AchievementId, { name: string; description: string }>;
   };
   games: {
     title: string;
@@ -469,14 +458,44 @@ const ru: Dictionary = {
     items: {
       first_game: { name: "Первая игра", description: "Добавь первую игру в библиотеку" },
       ten_games: { name: "Коллекционер", description: "10 игр в библиотеке" },
+      librarian: { name: "Библиотекарь", description: "25 игр в библиотеке" },
       fifty_games: { name: "Архивариус", description: "50 игр в библиотеке" },
+      bookworm: { name: "Книжный червь", description: "100 игр в библиотеке" },
+      game_mogul: { name: "Игровой магнат", description: "250 игр в библиотеке" },
+      bottomless_pocket: { name: "Бездонный карман", description: "500 игр в библиотеке" },
+      good_start: { name: "Хорошее начало", description: "Добавь 5 игр в коллекции" },
+      curated_shelf: { name: "Избранная полка", description: "Добавь 25 игр в коллекции" },
       first_completed: { name: "Пройдено!", description: "Пройди первую игру" },
+      hooked: { name: "Втянулся", description: "Пройди 3 игры" },
       ten_completed: { name: "Марафонец", description: "Пройди 10 игр" },
+      veteran: { name: "Ветеран", description: "Пройди 25 игр" },
+      story_master: { name: "Повелитель сюжетов", description: "Пройди 50 игр" },
+      gaming_machine: { name: "Игровая машина", description: "Пройди 100 игр" },
+      ninja: { name: "Ниндзя", description: "Пройди игру менее чем за 5 часов" },
+      epic_journey: { name: "Эпический поход", description: "Пройди игру, потратив более 50 часов" },
+      first_steps: { name: "Первые шаги", description: "Залогируй 10 часов" },
+      amateur: { name: "Любитель", description: "Залогируй 50 часов" },
       hundred_hours: { name: "Сотка", description: "Залогируй 100 часов" },
+      devoted_fan: { name: "Преданный фанат", description: "Залогируй 250 часов" },
+      no_sleep: { name: "Без сна и отдыха", description: "Залогируй 500 часов" },
+      life_on_screen: { name: "Жизнь на экране", description: "Залогируй 1000 часов" },
+      productivity_maniac: { name: "Маньяк продуктивности", description: "Проведи в одной игре более 100 часов" },
       first_rating: { name: "Судья", description: "Поставь оценку первой игре" },
+      strict_judge: { name: "Строгий судья", description: "Поставь оценки 10 играм" },
+      first_approval: { name: "Первое одобрение", description: "Поставь игре оценку 10/10" },
+      total_smackdown: { name: "Разгром", description: "Поставь игре оценку 1/10" },
       first_review: { name: "Критик", description: "Напиши первый отзыв" },
       five_reviews: { name: "Обозреватель", description: "Напиши 5 отзывов" },
+      film_critic: { name: "Кинокритик", description: "Напиши 10 отзывов" },
+      community_voice: { name: "Голос сообщества", description: "Напиши 25 отзывов" },
+      masters_pen: { name: "Перо мастера", description: "Напиши отзыв длиннее 500 символов" },
+      new_horizon: { name: "Новый горизонт", description: "Собери игры хотя бы в 2 жанрах" },
       genre_explorer: { name: "Всеядный", description: "Игры в 5 разных жанрах" },
+      explorer: { name: "Исследователь", description: "Игры в 10 разных жанрах" },
+      jack_of_all_trades: { name: "Мастер на все руки", description: "Игры в 20 разных жанрах" },
+      narrow_specialist: { name: "Узкий специалист", description: "Пройди 5 игр одного жанра" },
+      trophy_collector: { name: "Коллекционер трофеев", description: "Получи 25 достижений" },
+      gamehub_legend: { name: "Легенда GameHub", description: "Получи все остальные достижения" },
     },
   },
   games: {
@@ -743,14 +762,44 @@ const en: Dictionary = {
     items: {
       first_game: { name: "First Game", description: "Add your first game to the library" },
       ten_games: { name: "Collector", description: "10 games in your library" },
+      librarian: { name: "Librarian", description: "25 games in your library" },
       fifty_games: { name: "Archivist", description: "50 games in your library" },
+      bookworm: { name: "Bookworm", description: "100 games in your library" },
+      game_mogul: { name: "Game Mogul", description: "250 games in your library" },
+      bottomless_pocket: { name: "Bottomless Pocket", description: "500 games in your library" },
+      good_start: { name: "Good Start", description: "Add 5 games to collections" },
+      curated_shelf: { name: "Curated Shelf", description: "Add 25 games to collections" },
       first_completed: { name: "Completed!", description: "Complete your first game" },
+      hooked: { name: "Hooked", description: "Complete 3 games" },
       ten_completed: { name: "Marathoner", description: "Complete 10 games" },
+      veteran: { name: "Veteran", description: "Complete 25 games" },
+      story_master: { name: "Story Master", description: "Complete 50 games" },
+      gaming_machine: { name: "Gaming Machine", description: "Complete 100 games" },
+      ninja: { name: "Ninja", description: "Complete a game in under 5 hours" },
+      epic_journey: { name: "Epic Journey", description: "Complete a game after 50+ hours" },
+      first_steps: { name: "First Steps", description: "Log 10 hours" },
+      amateur: { name: "Amateur", description: "Log 50 hours" },
       hundred_hours: { name: "The Ton", description: "Log 100 hours" },
+      devoted_fan: { name: "Devoted Fan", description: "Log 250 hours" },
+      no_sleep: { name: "No Sleep", description: "Log 500 hours" },
+      life_on_screen: { name: "Life on Screen", description: "Log 1000 hours" },
+      productivity_maniac: { name: "Productivity Maniac", description: "Spend 100+ hours in a single game" },
       first_rating: { name: "Judge", description: "Rate your first game" },
+      strict_judge: { name: "Strict Judge", description: "Rate 10 games" },
+      first_approval: { name: "First Approval", description: "Give a game a 10/10" },
+      total_smackdown: { name: "Total Smackdown", description: "Give a game a 1/10" },
       first_review: { name: "Critic", description: "Write your first review" },
       five_reviews: { name: "Reviewer", description: "Write 5 reviews" },
+      film_critic: { name: "Film Critic", description: "Write 10 reviews" },
+      community_voice: { name: "Community Voice", description: "Write 25 reviews" },
+      masters_pen: { name: "Master's Pen", description: "Write a review longer than 500 characters" },
+      new_horizon: { name: "New Horizon", description: "Have games in at least 2 genres" },
       genre_explorer: { name: "Omnivore", description: "Games across 5 different genres" },
+      explorer: { name: "Explorer", description: "Games across 10 different genres" },
+      jack_of_all_trades: { name: "Jack of All Trades", description: "Games across 20 different genres" },
+      narrow_specialist: { name: "Narrow Specialist", description: "Complete 5 games of one genre" },
+      trophy_collector: { name: "Trophy Collector", description: "Unlock 25 achievements" },
+      gamehub_legend: { name: "GameHub Legend", description: "Unlock every other achievement" },
     },
   },
   games: {
