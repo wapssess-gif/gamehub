@@ -44,10 +44,16 @@
 | password_hash | string | null, если вход только через OAuth |
 | username | string, unique | публичный ник |
 | display_name | string | |
-| avatar_url | string | загружается в Vercel Blob |
+| avatar_url | string | загружается в Vercel Blob или берётся из Google-профиля |
 | bio | text | |
 | privacy | enum(public, private) | F4 — реализовано; `friends` как отдельный режим позже |
 | created_at | datetime | |
+| onboardedAt | datetime? | null = зарегистрировался через Google и ещё не выбрал `@ник` (гейт `/onboarding`) |
+
+`password_hash` действительно null для Google-аккаунтов (вход только
+через Google). Привязка Google к существующему аккаунту — по
+подтверждённому email (`profile.email_verified`), см.
+`signIn`-колбэк в [src/auth.ts](../../../GAMEHUB/src/auth.ts).
 
 ### Game (локальный кэш внешнего API)
 Мы не храним "мастер-копию" каталога — храним кэш того, что показывали
