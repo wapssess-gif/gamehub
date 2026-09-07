@@ -9,5 +9,6 @@ export const config = {
     "/users/:path*",
     "/u/:path*",
     "/collections/:path*",
+    "/onboarding",
   ],
 };

@@ -42,7 +42,7 @@ export default async function UsersSearchPage({
 
   const results = where
     ? await prisma.user.findMany({
-        where: { ...where, NOT: { id: meId } },
+        where: { ...where, NOT: { id: meId }, onboardedAt: { not: null } },
         select: { id: true, publicId: true, username: true, displayName: true, avatarUrl: true },
         orderBy: { username: "asc" },
         take: 25,

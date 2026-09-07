@@ -42,7 +42,9 @@ export async function registerUser(_prevState: FormState, formData: FormData): P
   }
 
   const passwordHash = await bcrypt.hash(password, 12);
-  await prisma.user.create({ data: { email, username, passwordHash } });
+  await prisma.user.create({
+    data: { email, username, passwordHash, onboardedAt: new Date() },
+  });
 
   try {
     await signIn("credentials", { email, password, redirectTo: "/library" });
@@ -53,6 +55,10 @@ export async function registerUser(_prevState: FormState, formData: FormData): P
     throw error;
   }
   return {};
+}
+
+export async function signInWithGoogle() {
+  await signIn("google", { redirectTo: "/library" });
 }
 
 export async function loginUser(_prevState: FormState, formData: FormData): Promise<FormState> {

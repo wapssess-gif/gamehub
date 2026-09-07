@@ -51,6 +51,7 @@ model User {
   bio          String?
   privacy      ProfilePrivacy @default(PUBLIC)
   createdAt    DateTime       @default(now())
+  onboardedAt  DateTime?      // null = ещё не выбрал @ник (после OAuth-регистрации)
 
   library       UserGame[]
   collections   Collection[]

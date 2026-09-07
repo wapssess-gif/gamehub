@@ -48,19 +48,31 @@ export type Dictionary = {
     loginSubmit: string;
     registerSubmit: string;
     pending: string;
+    or: string;
+    continueWithGoogle: string;
     errors: {
       invalidEmail: string;
       usernameTooShort: string;
       usernameTooLong: string;
       usernameInvalidChars: string;
+      usernameTaken: string;
       passwordTooShort: string;
       invalidCredentials: string;
       accountExists: string;
       registeredButLoginFailed: string;
+      oauthFailed: string;
       invalidData: string;
       notAuthorized: string;
       entryNotFound: string;
     };
+  };
+  onboarding: {
+    title: string;
+    subtitle: string;
+    usernameLabel: string;
+    submit: string;
+    saving: string;
+    allSet: string;
   };
   status: Record<GameStatus, string>;
   library: {
@@ -307,19 +319,31 @@ const ru: Dictionary = {
     loginSubmit: "Войти",
     registerSubmit: "Создать аккаунт",
     pending: "Подождите...",
+    or: "или",
+    continueWithGoogle: "Продолжить через Google",
     errors: {
       invalidEmail: "Некорректный email",
       usernameTooShort: "Ник — минимум 3 символа",
       usernameTooLong: "Ник — максимум 24 символа",
       usernameInvalidChars: "Только латиница, цифры и подчёркивание",
+      usernameTaken: "Этот ник уже занят",
       passwordTooShort: "Пароль — минимум 8 символов",
       invalidCredentials: "Неверный email или пароль",
       accountExists: "Пользователь с таким email или ником уже существует",
       registeredButLoginFailed: "Аккаунт создан, но вход не удался — попробуйте войти вручную",
+      oauthFailed: "Не удалось войти через Google",
       invalidData: "Некорректные данные",
       notAuthorized: "Не авторизован",
       entryNotFound: "Запись не найдена",
     },
+  },
+  onboarding: {
+    title: "Выберите ник",
+    subtitle: "Под этим ником вас будут находить другие. Сменить его потом нельзя.",
+    usernameLabel: "Ник",
+    submit: "Продолжить",
+    saving: "Сохраняю…",
+    allSet: "Всё готово, перенаправляем…",
   },
   status: {
     WANT_TO_PLAY: "Хочу играть",
@@ -614,19 +638,31 @@ const en: Dictionary = {
     loginSubmit: "Log in",
     registerSubmit: "Create account",
     pending: "Please wait...",
+    or: "or",
+    continueWithGoogle: "Continue with Google",
     errors: {
       invalidEmail: "Invalid email",
       usernameTooShort: "Username must be at least 3 characters",
       usernameTooLong: "Username must be at most 24 characters",
       usernameInvalidChars: "Only Latin letters, digits and underscore",
+      usernameTaken: "That username is taken",
       passwordTooShort: "Password must be at least 8 characters",
       invalidCredentials: "Invalid email or password",
       accountExists: "A user with this email or username already exists",
       registeredButLoginFailed: "Account created, but sign-in failed — please log in manually",
+      oauthFailed: "Google sign-in failed",
       invalidData: "Invalid data",
       notAuthorized: "Not authorized",
       entryNotFound: "Entry not found",
     },
+  },
+  onboarding: {
+    title: "Pick a username",
+    subtitle: "This is how others will find you. You can't change it later.",
+    usernameLabel: "Username",
+    submit: "Continue",
+    saving: "Saving…",
+    allSet: "All set, redirecting…",
   },
   status: {
     WANT_TO_PLAY: "Want to play",
