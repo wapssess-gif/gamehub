@@ -53,7 +53,9 @@
 `password_hash` действительно null для Google-аккаунтов (вход только
 через Google). Привязка Google к существующему аккаунту — по
 подтверждённому email (`profile.email_verified`), см.
-`signIn`-колбэк в [src/auth.ts](../../../GAMEHUB/src/auth.ts).
+`signIn`-колбэк в [src/auth.ts](../../../GAMEHUB/src/auth.ts). При
+привязке `display_name` / `avatar_url` не перезаписываются — данные из
+Google-профиля берутся только при создании новой записи.
 
 ### Game (локальный кэш внешнего API)
 Мы не храним "мастер-копию" каталога — храним кэш того, что показывали
